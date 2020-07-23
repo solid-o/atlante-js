@@ -15,16 +15,16 @@
   },
   "author": "Alessandro Chitolina <alekitto@gmail.com>",
   "dependencies": {
-    "@jymfony/util": "https://github.com/jymfony/util.git",
+    "@jymfony/util": "^0.1.0-alpha.25",
     "@types/chai": "^4.2.11"
   },
   "devDependencies": {
-    "@jymfony/autoloader": "https://github.com/jymfony/autoloader.git",
-    "@jymfony/compiler": "https://github.com/jymfony/compiler.git",
-    "@jymfony/datetime": "https://github.com/jymfony/date-time.git",
-    "@jymfony/debug": "https://github.com/jymfony/debug.git",
-    "@jymfony/testing": "https://github.com/jymfony/testing.git",
-    "@jymfony/var-dumper": "https://github.com/jymfony/var-dumper.git",
+    "@jymfony/autoloader": "^0.1.0-alpha.25",
+    "@jymfony/compiler": "^0.2.1",
+    "@jymfony/datetime": "^0.1.0-alpha.25",
+    "@jymfony/debug": "^0.1.0-alpha.25",
+    "@jymfony/testing": "^0.1.0-alpha.25",
+    "@jymfony/var-dumper": "^0.1.0-alpha.25",
     "@types/node": "^12.12.6",
     "@typescript-eslint/eslint-plugin": "^3.7.0",
     "@typescript-eslint/parser": "^3.7.0",
