@@ -11,13 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@main
+      uses: actions/checkout@v2
     - name: Set up Node.js
-      uses: actions/setup-node@main
+      uses: actions/setup-node@v1
       with:
-        node-version: 12.0.0
-    - name: NPM Tests
-      uses: anna-money/github-actions-npm@v1
+        node-version: '12.x'
+    - run: npm install
+    - run: npm test
+      env:
+        CI: true
     - name: Publish if version has been updated
       uses: pascalgn/npm-publish-action@3d228dd9d6c7851b8d24b532dc8d15d74f615043
       with:
