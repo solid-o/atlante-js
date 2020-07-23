@@ -1,6 +1,6 @@
-Fazland - Atlante
-=================
-[![Build Status](https://travis-ci.com/fazland/atlante.svg?branch=master)](https://travis-ci.com/fazland/atlante)
+Solido - Atlante
+================
+[![Build Status](https://travis-ci.com/solid-o/atlante-js.svg?branch=master)](https://travis-ci.com/solid-o/atlante-js)
 
 Solido Atlante is an javascript HTTP Client.
 
