@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "declaration": true,
+    "inlineSourceMap": true,
     "noImplicitAny": true,
-    "target": "ESNext",
+    "target": "ES2017",
     "typeRoots": [
       "@types",
       "./node_modules/@jymfony"

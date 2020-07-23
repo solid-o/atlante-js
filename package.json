@@ -7,6 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
+    "build": "tsc",
     "coverage": "nyc npm test",
     "coverage-html": "nyc --reporter=html npm test",
     "lint": "eslint lib/",
@@ -19,7 +20,7 @@
   },
   "devDependencies": {
     "@jymfony/autoloader": "^0.1.0-alpha.25",
-    "@jymfony/compiler": "^0.2.1",
+    "@jymfony/compiler": "^0.2.2",
     "@jymfony/datetime": "^0.1.0-alpha.25",
     "@jymfony/debug": "^0.1.0-alpha.25",
     "@jymfony/testing": "^0.1.0-alpha.25",
