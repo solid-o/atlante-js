@@ -1,5 +1,14 @@
 {
   "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "parserOptions": {
     "ecmaVersion": 9,
     "sourceType": "module"
@@ -9,6 +18,11 @@
     "es6": true
   },
   "rules": {
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "array-bracket-spacing": ["error", "always"],
     "array-callback-return": "error",
     "block-spacing": ["error", "always"],
@@ -43,7 +57,6 @@
     "new-parens": "error",
     "no-caller": "error",
     "no-case-declarations": "error",
-    "no-dupe-class-members": "error",
     "no-duplicate-imports": "error",
     "no-else-return": "warn",
     "no-fallthrough": "warn",
@@ -63,9 +76,8 @@
     "no-this-before-super": "error",
     "no-throw-literal": "error",
     "no-trailing-spaces": "error",
+    "no-undef": "off",
     "no-unused-expressions": "error",
-    "no-unused-vars": "error",
-    "no-useless-constructor": "error",
     "no-useless-return": "off",
     "no-var": "error",
     "no-void": "error",
@@ -76,7 +88,6 @@
     "prefer-rest-params": "error",
     "prefer-spread": "error",
     "quotes": ["error", "single"],
-    "semi": ["error", "always"],
     "sort-imports": "error",
     "spaced-comment": ["error", "always"],
     "unicode-bom": "error",

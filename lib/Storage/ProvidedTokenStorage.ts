@@ -1,5 +1,5 @@
 import AbstractStorage from './AbstractStorage';
-import NullMarshaller from "./Marshaller/NullMarshaller";
+import NullMarshaller from './Marshaller/NullMarshaller';
 
 export default
 class ProvidedTokenStorage extends AbstractStorage {

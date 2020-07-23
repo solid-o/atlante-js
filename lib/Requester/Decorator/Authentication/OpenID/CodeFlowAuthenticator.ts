@@ -1,5 +1,5 @@
-import BaseAuthenticator, { AuthFlowDisplay } from "./BaseAuthenticator";
-import NoTokenAvailableException from "../../../../Exception/NoTokenAvailableException";
+import BaseAuthenticator, { AuthFlowDisplay } from './BaseAuthenticator';
+import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
 
 export default
 class CodeFlowAuthenticator extends BaseAuthenticator {

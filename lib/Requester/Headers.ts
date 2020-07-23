@@ -1,5 +1,5 @@
-import Accept from "./Header/Accept";
-import BaseAccept from "./Header/BaseAccept";
+import Accept from './Header/Accept';
+import BaseAccept from './Header/BaseAccept';
 
 export default
 class Headers {
@@ -30,7 +30,7 @@ class Headers {
         const lowerName = name.toLowerCase();
 
         if ('accept' === lowerName && ! (value instanceof Accept)) {
-            value = new Accept(typeof value === 'string' ? value : value[0]);
+            value = new Accept('string' === typeof value ? value : value[0]);
         }
 
         if (value instanceof BaseAccept && ! lowerName.startsWith('accept')) {
@@ -63,7 +63,7 @@ class Headers {
      * Checks whether an header is present.
      */
     has(name: string): boolean {
-        return this._headers.hasOwnProperty(name.toLowerCase());
+        return Object.prototype.hasOwnProperty.call(this._headers, name.toLowerCase());
     }
 
     /**
@@ -90,7 +90,7 @@ class Headers {
 
         const lowerName = name.toLowerCase();
         if ('accept' === lowerName && ! (value instanceof Accept)) {
-            value = new Accept(typeof value === 'string' ? value : value[0]);
+            value = new Accept('string' === typeof value ? value : value[0]);
         }
 
         if (value instanceof BaseAccept) {

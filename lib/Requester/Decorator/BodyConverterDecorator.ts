@@ -1,5 +1,5 @@
+import Decorator, { DecoratorInterface } from './DecoratorInterface';
 import Request from '../Request';
-import Decorator, { DecoratorInterface } from "./DecoratorInterface";
 
 export default
 class BodyConverterDecorator extends implementationOf(Decorator) implements DecoratorInterface {

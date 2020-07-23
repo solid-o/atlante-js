@@ -1,5 +1,5 @@
-import Request from "../Requester/Request";
-import Response from "../Requester/Response";
+import Request from '../Requester/Request';
+import Response from '../Requester/Response';
 
 export default
 class HttpException extends Error {

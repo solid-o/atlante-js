@@ -1,5 +1,5 @@
-import { ItemInterface } from './ItemInterface';
 import Storage, { StorageInterface } from './StorageInterface';
+import { ItemInterface } from './ItemInterface';
 
 export default
 class ChainStorage extends implementationOf(Storage) implements StorageInterface {

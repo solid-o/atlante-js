@@ -1,7 +1,7 @@
+import Headers from '../Requester/Headers';
 import Response from '../Requester/Response';
 
-export default
-interface ClientInterface {
+export class ClientInterface {
     /**
      * Performs a request to the API service using the given method.
      *
@@ -14,25 +14,35 @@ interface ClientInterface {
      *
      * @throws {NoTokenAvailableException} When no token could be provided for the request.
      */
-    request<T = any>(method: string, path: string, requestData?: any, headers?: {}): Promise<Response<T>>;
+    // @ts-ignore
+    request<T = any>(method: string, path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> { }
 
     /**
      * Performs a request to the API service using a GET method.
      */
-    get<T = any>(path: string, headers?: {}): Promise<Response<T>>;
+    // @ts-ignore
+    get<T = any>(path: string, headers?: Record<string, string> | Headers): Promise<Response<T>> { }
 
     /**
      * Performs a request to the API service using a POST method.
      */
-    post<T = any>(path: string, requestData?: any, headers?: {}): Promise<Response<T>>;
+    // @ts-ignore
+    post<T = any>(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> { }
 
     /**
      * Performs a request to the API service using a PUT method.
      */
-    put<T = any>(path: string, requestData?: any, headers?: {}): Promise<Response<T>>;
+    // @ts-ignore
+    put<T = any>(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> { }
 
     /**
      * Performs a request to the API service using a PATCH method.
      */
-    patch<T = any>(path: string, requestData?: any, headers?: {}): Promise<Response<T>>;
+    // @ts-ignore
+    patch<T = any>(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> { }
 }
+
+export interface ClientInterface {
+}
+
+export default getInterface(ClientInterface);

@@ -1,4 +1,4 @@
-import HttpMessage from "./HttpMessage";
+import HttpMessage from './HttpMessage';
 
 export default
 interface Request<T = any> extends HttpMessage {

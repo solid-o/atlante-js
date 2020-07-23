@@ -1,4 +1,4 @@
-import Request from "../../Request";
+import Request from '../../Request';
 
 const encode = (() => {
     if ('undefined' !== typeof Buffer) {
@@ -48,7 +48,7 @@ export default class HttpBasicAuthenticator {
     constructor(encodedAuth: string);
     constructor(username: string, password: string);
     constructor(usernameOrEncodedAuth: string, password: string = undefined) {
-        this._auth = undefined === password ? usernameOrEncodedAuth : encode(usernameOrEncodedAuth + (!! password ? ':' + password : ''));
+        this._auth = undefined === password ? usernameOrEncodedAuth : encode(usernameOrEncodedAuth + (password ? ':' + password : ''));
     }
 
     /**

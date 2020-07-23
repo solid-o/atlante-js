@@ -1,10 +1,10 @@
-import Headers from "../../../Headers";
-import { RequesterInterface } from "../../../RequesterInterface";
+import Headers from '../../../Headers';
+import HttpBasicAuthenticator from '../HttpBasicAuthenticator';
+import { RequesterInterface } from '../../../RequesterInterface';
 import ServerConfiguration from './ServerConfiguration';
-import { StorageInterface } from "../../../../Storage/StorageInterface";
+import { StorageInterface } from '../../../../Storage/StorageInterface';
 import TokenPasswordAuthenticator from '../OAuth/TokenPasswordAuthenticator';
-import { TokenRequestParams } from "../OAuth/ClientTokenAuthenticator";
-import HttpBasicAuthenticator from "../HttpBasicAuthenticator";
+import { TokenRequestParams } from '../OAuth/ClientTokenAuthenticator';
 
 export interface OpenidAuthenticatorConfiguration {
     server_url: string;
@@ -65,7 +65,7 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
     /**
      * @inheritdoc
      */
-    async logout(state?: string): Promise<void>  {
+    async logout(state?: string): Promise<void> {
         const configuration = await this._openidConfiguration;
         if (! configuration.logoutEndpoint) {
             return super.logout();
@@ -74,11 +74,11 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
         const endSessionUrl = new URL(configuration.logoutEndpoint);
         endSessionUrl.searchParams.append('post_logout_redirect_uri', this._postLogoutRedirectUri || window.location.href);
 
-        if (!! state) {
+        if (state) {
             endSessionUrl.searchParams.append('state', state);
         }
 
-        if (!! this._idTokenKey) {
+        if (this._idTokenKey) {
             const idItem = await this._tokenStorage.getItem(this._idTokenKey);
             if (idItem.isHit) {
                 endSessionUrl.searchParams.append('id_token_hint', idItem.get());
@@ -92,7 +92,7 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
     /**
      * @inheritdoc
      */
-    protected async _getToken(): Promise<string>  {
+    protected async _getToken(): Promise<string> {
         const configuration = await this._openidConfiguration;
         this._tokenEndpoint = configuration.tokenEndpoint;
 

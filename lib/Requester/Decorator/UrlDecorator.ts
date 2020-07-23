@@ -1,5 +1,5 @@
-import Decorator, { DecoratorInterface } from "./DecoratorInterface";
-import Request from "../Request";
+import Decorator, { DecoratorInterface } from './DecoratorInterface';
+import Request from '../Request';
 
 export default
 class UrlDecorator extends implementationOf(Decorator) implements DecoratorInterface {

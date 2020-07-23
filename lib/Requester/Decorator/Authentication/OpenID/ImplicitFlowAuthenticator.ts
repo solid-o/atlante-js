@@ -1,7 +1,7 @@
 import BaseAuthenticator, { AuthFlowDisplay, OpenidAuthenticatorConfiguration } from './BaseAuthenticator';
-import { RequesterInterface } from "../../../RequesterInterface";
-import { StorageInterface } from "../../../../Storage/StorageInterface";
-import NoTokenAvailableException from "../../../../Exception/NoTokenAvailableException";
+import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
+import { RequesterInterface } from '../../../RequesterInterface';
+import { StorageInterface } from '../../../../Storage/StorageInterface';
 
 interface ImplicitFlowAuthenticatorConfiguration extends OpenidAuthenticatorConfiguration {
     refresh_redirect_uri: string;
@@ -63,10 +63,11 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
 
         const error = params.get('error') || queryParams.get('error');
         if (error) {
-            let errorDescription, errorHint;
+            const errorDescription = params.get('error_description') || queryParams.get('error_description');
+            const errorHint = params.get('error_hint') || queryParams.get('error_hint');
             const errorMessage = 'Error: ' + error +
-                ((errorDescription = params.get('error_description') || queryParams.get('error_description')) ? '\nDescription: ' + decodeURIComponent(errorDescription) : '') +
-                ((errorHint = params.get('error_hint') || queryParams.get('error_hint')) ? '\nHint: ' + decodeURIComponent(errorHint) : '');
+                (errorDescription ? '\nDescription: ' + decodeURIComponent(errorDescription) : '') +
+                (errorHint ? '\nHint: ' + decodeURIComponent(errorHint) : '');
 
             window.parent.postMessage(data, '*');
             throw new NoTokenAvailableException(errorMessage);
@@ -83,7 +84,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
         await this._tokenStorage.save(item);
 
         const id_token = params.get('id_token');
-        if (!! id_token) {
+        if (id_token) {
             const idItem = await this._tokenStorage.getItem(this._idTokenKey);
             idItem.set(id_token);
             await this._tokenStorage.save(idItem);

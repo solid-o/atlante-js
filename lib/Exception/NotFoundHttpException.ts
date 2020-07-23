@@ -1,6 +1,6 @@
-import HttpException from "./HttpException";
-import Response from "../Requester/Response";
-import Request from "../Requester/Request";
+import HttpException from './HttpException';
+import Request from '../Requester/Request';
+import Response from '../Requester/Response';
 
 export default
 class NotFoundHttpException extends HttpException {

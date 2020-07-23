@@ -1,6 +1,6 @@
+import Requester, { RequesterInterface } from './RequesterInterface';
 import Headers from './Headers';
-import Requester, { RequesterInterface } from "./RequesterInterface";
-import Response from "./Response";
+import Response from './Response';
 
 export default
 class WebRequester extends implementationOf(Requester) implements RequesterInterface {

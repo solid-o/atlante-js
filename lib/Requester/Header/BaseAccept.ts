@@ -18,7 +18,7 @@ class BaseAccept {
     protected constructor(value: string) {
         const [ type, parameters ] = this._parseParameters(value);
 
-        if (!! parameters.q) {
+        if (parameters.q) {
             this._quality = parseFloat(parameters.q);
             delete parameters.q;
         } else {
@@ -87,7 +87,7 @@ class BaseAccept {
         const [ type, ...parts ] = acceptPart.split(';');
 
         const parameters: Record<string, string> = {};
-        for (let part of parts) {
+        for (const part of parts) {
             const split = part.split('=');
             if (2 !== split.length) {
                 continue;

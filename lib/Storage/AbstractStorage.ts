@@ -1,8 +1,8 @@
 import Storage, { StorageInterface } from './StorageInterface';
-import { MarshallerInterface } from './Marshaller/MarshallerInterface';
-import Item from "./Item";
+import Item from './Item';
 import { ItemInterface } from './ItemInterface';
-import JSONMarshaller from "./Marshaller/JSONMarshaller";
+import JSONMarshaller from './Marshaller/JSONMarshaller';
+import { MarshallerInterface } from './Marshaller/MarshallerInterface';
 
 export default
 abstract class AbstractStorage extends implementationOf(Storage) implements StorageInterface {

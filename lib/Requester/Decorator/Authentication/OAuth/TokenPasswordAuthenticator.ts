@@ -1,8 +1,8 @@
 import ClientTokenAuthenticator, { ClientTokenAuthenticatorConfiguration } from './ClientTokenAuthenticator';
-import { RequesterInterface } from "../../../RequesterInterface";
-import { StorageInterface } from "../../../../Storage/StorageInterface";
-import Response from "../../../Response";
-import NoTokenAvailableException from "../../../../Exception/NoTokenAvailableException";
+import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
+import { RequesterInterface } from '../../../RequesterInterface';
+import Response from '../../../Response';
+import { StorageInterface } from '../../../../Storage/StorageInterface';
 
 interface TokenPasswordAuthenticatorConfiguration extends ClientTokenAuthenticatorConfiguration {
     access_token_key?: string;
@@ -124,12 +124,12 @@ export default class TokenPasswordAuthenticator extends ClientTokenAuthenticator
         item.expiresAfter(content.expires_in - 60);
         await this._tokenStorage.save(item);
 
-        if (!! content.refresh_token) {
+        if (content.refresh_token) {
             refreshItem.set(content.refresh_token);
             await this._tokenStorage.save(refreshItem);
         }
 
-        if (!! content.id_token) {
+        if (content.id_token) {
             const idItem = await this._tokenStorage.getItem(this._idTokenKey);
             idItem.set(content.id_token);
             await this._tokenStorage.save(idItem);

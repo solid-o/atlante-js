@@ -1,10 +1,10 @@
-import Decorator, { DecoratorInterface } from "../../DecoratorInterface";
-import Request from "../../../Request";
-import { RequesterInterface } from "../../../RequesterInterface";
-import { StorageInterface } from "../../../../Storage/StorageInterface";
-import Response from "../../../Response";
-import Headers from "../../../Headers";
-import NoTokenAvailableException from "../../../../Exception/NoTokenAvailableException";
+import Decorator, { DecoratorInterface } from '../../DecoratorInterface';
+import Headers from '../../../Headers';
+import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
+import Request from '../../../Request';
+import { RequesterInterface } from '../../../RequesterInterface';
+import Response from '../../../Response';
+import { StorageInterface } from '../../../../Storage/StorageInterface';
 
 export interface ClientTokenAuthenticatorConfiguration {
     token_endpoint: string;
@@ -68,7 +68,7 @@ class ClientTokenAuthenticator extends implementationOf(Decorator) implements De
     /**
      * Request a token.
      */
-    protected async _getToken(): Promise<string>  {
+    protected async _getToken(): Promise<string> {
         const item = await this._tokenStorage.getItem(this._clientTokenKey);
         if (item.isHit) {
             return item.get();
