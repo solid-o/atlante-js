@@ -21,6 +21,6 @@ jobs:
       env:
         CI: true
     - run: cp .npmrc.dist .npmrc
-    - run: npm publish --public
+    - run: npm publish --access public
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
