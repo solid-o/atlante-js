@@ -20,6 +20,7 @@ jobs:
     - run: npm test
       env:
         CI: true
+    - run: npm run build
     - run: cp .npmrc.dist .npmrc
     - run: npm publish --access public
       env:
