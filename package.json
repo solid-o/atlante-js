@@ -10,8 +10,7 @@
     "coverage": "nyc npm test",
     "coverage-html": "nyc --reporter=html npm test",
     "lint": "eslint lib/",
-    "test": "npm run unit-test && npm run lint",
-    "unit-test": "node ./tests.js \"test/**/*.js\""
+    "test": "node ./tests.js \"test/**/*.js\""
   },
   "author": "Alessandro Chitolina <alekitto@gmail.com>",
   "dependencies": {

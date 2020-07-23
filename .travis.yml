@@ -9,8 +9,6 @@ os:
     - linux
 
 install:
-    - npm install -g eslint
-    - if [ "$TRAVIS_NODE_VERSION" == "12" ]; then npm install -g nyc; fi
     - npm install
 
 script:
@@ -19,3 +17,12 @@ script:
 after_success:
     - if [ "$TRAVIS_NODE_VERSION" == "12" ]; then npm install https://github.com/alekitto/ocular.js.git; fi
     - if [ "$TRAVIS_NODE_VERSION" == "12" ]; then $(npm bin)/ocular coverage/clover.xml; fi
+
+jobs:
+    include:
+        - stage: lint
+          node_js: "12"
+          os: linux
+          script:
+              - npm install -g eslint
+              - npm run-script lint
