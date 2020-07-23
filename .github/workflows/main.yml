@@ -20,13 +20,4 @@ jobs:
     - run: npm test
       env:
         CI: true
-    - name: Publish if version has been updated
-      uses: pascalgn/npm-publish-action@3d228dd9d6c7851b8d24b532dc8d15d74f615043
-      with:
-        tag_name: "%s"
-        tag_message: "%s"
-        commit_pattern: "^Release (\\S+)"
-        workspace: "."
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+    - run: npm publish --public
