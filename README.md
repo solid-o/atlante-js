@@ -2,11 +2,11 @@ Fazland - Atlante
 =================
 [![Build Status](https://travis-ci.com/fazland/atlante.svg?branch=master)](https://travis-ci.com/fazland/atlante)
 
-Fazland Atlante is an javascript HTTP Client.
+Solido Atlante is an javascript HTTP Client.
 
 Requirements
 ------------
-- node >= 8
+- node >= 10
 - `@jymfony/util`
 
 Installation
@@ -14,13 +14,13 @@ Installation
 The suggested installation method is via [yarn](https://yarnpkg.com/):
 
 ```sh
-$ yarn add @fazland/atlante
+$ yarn add @solido/atlante
 ```
 
 But you can also install it via [npm](https://npmjs.com//):
 
 ```sh
-$ npm install @fazland/atlante
+$ npm install @solido/atlante
 ```
 
 Using Atlante
@@ -46,4 +46,4 @@ Contributions are welcome. Feel free to open a PR or file an issue here on GitHu
 
 License
 -------
-Atlante is licensed under the MIT License - see the [LICENSE](https://github.com/fazland/atlante/blob/master/LICENSE) file for details
+Atlante is licensed under the MIT License - see the [LICENSE](https://github.com/solid-o/atlante/blob/master/LICENSE) file for details
