@@ -1,0 +1,65 @@
+{
+  "name": "@solido/atlante-js",
+  "version": "0.0.0",
+  "description": "JS Http Client",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "coverage": "nyc npm test",
+    "coverage-html": "nyc --reporter=html npm test",
+    "lint": "eslint lib/",
+    "test": "npm run unit-test && npm run lint",
+    "unit-test": "node ./tests.js \"test/**/*.js\""
+  },
+  "author": "Alessandro Chitolina <alekitto@gmail.com>",
+  "dependencies": {
+    "@jymfony/util": "https://github.com/jymfony/util.git",
+    "@types/chai": "^4.2.11"
+  },
+  "devDependencies": {
+    "@jymfony/autoloader": "https://github.com/jymfony/autoloader.git",
+    "@jymfony/compiler": "https://github.com/jymfony/compiler.git",
+    "@jymfony/datetime": "https://github.com/jymfony/date-time.git",
+    "@jymfony/debug": "https://github.com/jymfony/debug.git",
+    "@jymfony/testing": "https://github.com/jymfony/testing.git",
+    "@jymfony/var-dumper": "https://github.com/jymfony/var-dumper.git",
+    "@types/node": "^12.12.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0",
+    "node-localstorage": "^1.3.1",
+    "nyc": "^14.1.1",
+    "typescript": "^3.9.7",
+    "whatwg-url": "^7.0.0"
+  },
+  "config": {
+    "jymfony-autoload": {
+      "namespaces": {
+        "Solido.Atlante": "lib"
+      }
+    }
+  },
+  "nyc": {
+    "per-file": true,
+    "hookRequire": true,
+    "hookRunInContext": true,
+    "hookRunInThisContext": true,
+    "include": [
+      "lib/**/*.js"
+    ],
+    "exclude": [
+      "**/tests.js",
+      "**/namespace-stub.js",
+      "**/fixtures/**",
+      "**/test/**"
+    ],
+    "reporter": [
+      "text-summary",
+      "text",
+      "clover"
+    ],
+    "all": true,
+    "report-dir": "./coverage"
+  }
+}
