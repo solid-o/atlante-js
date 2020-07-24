@@ -1,8 +1,3 @@
-import '@jymfony/util/lib/Async/Mutex';
-import '@jymfony/util/lib/Platform';
-import '@jymfony/util/lib/is';
-import '@jymfony/util/lib/Object/filter';
-
 import Interface, { ClientInterface } from './ClientInterface';
 import { DecoratorInterface } from '../Requester/Decorator/DecoratorInterface';
 import Headers from '../Requester/Headers';

@@ -2,6 +2,7 @@
   "compilerOptions": {
     "declaration": true,
     "inlineSourceMap": true,
+    "inlineSources": true,
     "noImplicitAny": true,
     "target": "ES2017",
     "typeRoots": [
