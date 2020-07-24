@@ -61,4 +61,4 @@ yarn.lock
 
 var/
 package-lock.json
-*.ts
+*.d.ts
