@@ -9,7 +9,7 @@ class WebRequester extends implementationOf(Requester) implements RequesterInter
     /**
      * Constructor.
      */
-    constructor(xmlHttp?: typeof XMLHttpRequest) {
+    constructor(xmlHttp: typeof XMLHttpRequest = XMLHttpRequest) {
         super();
         this._xmlHttp = xmlHttp;
     }
