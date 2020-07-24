@@ -1,6 +1,6 @@
 {
   "name": "@solido/atlante-js",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "JS Http Client",
   "license": "MIT",
   "directories": {
