@@ -11,6 +11,7 @@
     "coverage": "nyc npm test",
     "coverage-html": "nyc --reporter=html npm test",
     "lint": "eslint lib/",
+    "lint-fix": "eslint --fix lib/",
     "test": "node ./tests.js \"test/**/*.js\""
   },
   "author": "Alessandro Chitolina <alekitto@gmail.com>",
