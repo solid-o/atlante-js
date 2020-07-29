@@ -148,7 +148,9 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
                 resolved = true;
                 document.body.removeChild(frame);
 
-                if (event.data.error) {
+                if (event.data.error === 'login_required') {
+                    resolve(null);
+                } else if (event.data.error) {
                     reject(new NoTokenAvailableException('Refresh token returned "' + event.data.error + '"'));
                 } else {
                     resolve(event.data.access_token);
