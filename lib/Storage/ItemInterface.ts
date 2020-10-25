@@ -18,13 +18,15 @@
  * compatible with a Pool from another Implementing Library.
  */
 export class ItemInterface {
+    // @ts-ignore
     /**
      * The key for the current item.
      *
      * The key is loaded by the Implementing Library, but should be available to
      * the higher level callers when needed.
      */
-    readonly key: string;
+    // @ts-ignore
+    get key(): string { }
 
     /**
      * Retrieves the value of the item from the cache associated with this object's key.
@@ -43,7 +45,8 @@ export class ItemInterface {
      * Note: This method MUST NOT have a race condition between checking isHit
      * and calling get().
      */
-    readonly isHit: boolean;
+    // @ts-ignore
+    get isHit(): boolean { }
 
     /**
      * Sets the value represented by this item.

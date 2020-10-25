@@ -13,6 +13,10 @@ class InMemoryStorage extends implementationOf(Storage) implements StorageInterf
      */
     private readonly _createCacheItem: (key: string, value: any, isHit: boolean) => ItemInterface;
 
+    private _values: Record<string, string>;
+    private _expiries: Record<string, number>;
+    private _pruneInterval: any;
+
     constructor(defaultLifetime?: number) {
         super();
 
@@ -26,30 +30,9 @@ class InMemoryStorage extends implementationOf(Storage) implements StorageInterf
             return item;
         };
 
-        /**
-         * @type {MarshallerInterface}
-         */
         this.marshaller = new JSONMarshaller();
-
-        /**
-         * @type {Object.<string, string>}
-         *
-         * @private
-         */
         this._values = {};
-
-        /**
-         * @type {Object.<string, number>}
-         *
-         * @private
-         */
         this._expiries = {};
-
-        /**
-         * @type {number}
-         *
-         * @private
-         */
         this._pruneInterval = undefined;
     }
 
