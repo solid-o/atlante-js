@@ -4,6 +4,9 @@ node_js:
     - '10'
     - '11'
     - '12'
+    - '13'
+    - '14'
+    - '15'
 
 os:
     - linux
@@ -12,16 +15,16 @@ install:
     - npm install
 
 script:
-    - if [ "$TRAVIS_NODE_VERSION" == "12" ]; then npm run-script coverage; else npm test; fi
+    - if [ "$TRAVIS_NODE_VERSION" == "14" ]; then npm run-script coverage; else npm test; fi
 
 after_success:
-    - if [ "$TRAVIS_NODE_VERSION" == "12" ]; then npm install https://github.com/alekitto/ocular.js.git; fi
-    - if [ "$TRAVIS_NODE_VERSION" == "12" ]; then $(npm bin)/ocular coverage/clover.xml; fi
+    - if [ "$TRAVIS_NODE_VERSION" == "14" ]; then npm install https://github.com/alekitto/ocular.js.git; fi
+    - if [ "$TRAVIS_NODE_VERSION" == "14" ]; then $(npm bin)/ocular coverage/clover.xml; fi
 
 jobs:
     include:
         - stage: lint
-          node_js: "12"
+          node_js: "14"
           os: linux
           script:
               - npm install -g eslint
