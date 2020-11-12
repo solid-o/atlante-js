@@ -129,6 +129,14 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
         }
 
         const frame = window.document.createElement('iframe');
+        const removeFrame = () => {
+            try {
+                document.body.removeChild(frame);
+            } catch (e) {
+                // Someone already removed the frame: do nothing.
+            }
+        };
+
         let resolved = false;
         const responsePromise: Promise<string> = new Promise<string>((resolve, reject) => {
             frame.style.position = 'fixed';
@@ -146,7 +154,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
                 }
 
                 resolved = true;
-                document.body.removeChild(frame);
+                removeFrame();
 
                 if ('login_required' === event.data.error) {
                     resolve(null);
@@ -157,7 +165,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
                 }
             });
 
-            document.body.appendChild(frame);
+            removeFrame();
         });
 
         return Promise.race([
@@ -168,7 +176,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
                         return null;
                     }
 
-                    document.body.removeChild(frame);
+                    removeFrame();
                     reject(new NoTokenAvailableException('Timed out while refreshing access token'));
                 }, 60000);
             }),
