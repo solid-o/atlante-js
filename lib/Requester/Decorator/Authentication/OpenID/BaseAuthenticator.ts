@@ -1,7 +1,8 @@
+import ServerConfiguration, { ServerConfigurationProps } from './ServerConfiguration';
 import Headers from '../../../Headers';
 import HttpBasicAuthenticator from '../HttpBasicAuthenticator';
+import InvalidResponse from '../../../Response/InvalidResponse';
 import { RequesterInterface } from '../../../RequesterInterface';
-import ServerConfiguration from './ServerConfiguration';
 import { StorageInterface } from '../../../../Storage/StorageInterface';
 import TokenPasswordAuthenticator from '../OAuth/TokenPasswordAuthenticator';
 import { TokenRequestParams } from '../OAuth/ClientTokenAuthenticator';
@@ -130,11 +131,11 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
     private async _getConfiguration(): Promise<ServerConfiguration> {
         const configurationUrl = new URL('/.well-known/openid-configuration', this._serverUrl).toString();
         const response = await this._requester.request('GET', configurationUrl);
-        if (200 !== response.status) {
+        if (response instanceof InvalidResponse) {
             throw new Error('Server misconfiguration or server does not support OpenID Connect');
         }
 
-        return new ServerConfiguration(response.data);
+        return new ServerConfiguration(response.getData<ServerConfigurationProps>());
     }
 
     /**
@@ -149,10 +150,10 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
             'Authorization': 'Bearer ' + token,
         });
 
-        if (200 !== response.status) {
+        if (response instanceof InvalidResponse) {
             throw new Error('Bad response');
         }
 
-        return response.data;
+        return response.getData<any>();
     }
 }

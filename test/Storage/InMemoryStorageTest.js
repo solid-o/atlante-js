@@ -1,13 +1,12 @@
+import { AdapterTestCase } from './AdapterTestCase';
 const InMemoryStorage = Solido.Atlante.Storage.InMemoryStorage;
-const AdapterTestCase = require('./AdapterTestCase');
 
-describe('[Storage] InMemoryStorage', function () {
-    AdapterTestCase.shouldPassAdapterTests.call(this);
+export default class InMemoryStorageTest extends AdapterTestCase {
+    async testBasicUsageWithLongKeys() {
+        this.markTestSkipped();
+    }
 
-    this.testBasicUsageWithLongKeys = undefined;
-    this._createCachePool = (defaultLifetime = undefined) => {
+    _createCachePool(defaultLifetime = undefined) {
         return new InMemoryStorage(defaultLifetime);
-    };
-
-    this.run();
-});
+    }
+}

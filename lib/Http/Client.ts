@@ -1,11 +1,17 @@
 import Interface, { ClientInterface } from './ClientInterface';
+import AccessDeniedException from '../Exception/AccessDeniedException';
+import AccessDeniedResponse from '../Requester/Response/AccessDeniedResponse';
+import BadRequestException from '../Exception/BadRequestException';
+import BadResponse from '../Requester/Response/BadResponse';
 import { DecoratorInterface } from '../Requester/Decorator/DecoratorInterface';
 import Headers from '../Requester/Headers';
-import HttpException from '../Exception/HttpException';
-import NotFoundHttpException from '../Exception/NotFoundHttpException';
+import InvalidRequestException from '../Exception/InvalidRequestException';
+import InvalidResponse from '../Requester/Response/InvalidResponse';
+import NotFoundException from '../Exception/NotFoundException';
+import NotFoundResponse from '../Requester/Response/NotFoundResponse';
 import Request from '../Requester/Request';
 import { RequesterInterface } from '../Requester/RequesterInterface';
-import Response from '../Requester/Response';
+import { ResponseInterface } from '../Requester/Response/ResponseInterface';
 
 export default
 class Client extends implementationOf(Interface) implements ClientInterface {
@@ -27,35 +33,35 @@ class Client extends implementationOf(Interface) implements ClientInterface {
     /**
      * @inheritdoc
      */
-    get<T = any>(path: string, headers?: Record<string, string> | Headers): Promise<Response<T>> {
+    get(path: string, headers?: Record<string, string> | Headers): Promise<ResponseInterface> {
         return this.request('GET', path, null, headers);
     }
 
     /**
      * @inheritdoc
      */
-    post<T = any>(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> {
+    post(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<ResponseInterface> {
         return this.request('POST', path, requestData, headers);
     }
 
     /**
      * @inheritdoc
      */
-    put<T = any>(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> {
+    put(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<ResponseInterface> {
         return this.request('PUT', path, requestData, headers);
     }
 
     /**
      * @inheritdoc
      */
-    patch<T = any>(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> {
+    patch(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<ResponseInterface> {
         return this.request('PATCH', path, requestData, headers);
     }
 
     /**
      * @inheritdoc
      */
-    async request<T = any>(method: string, path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> {
+    async request(method: string, path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<ResponseInterface> {
         if ('GET' === method || 'HEAD' === method || 'DELETE' === method) {
             requestData = undefined;
         }
@@ -78,7 +84,7 @@ class Client extends implementationOf(Interface) implements ClientInterface {
         }
 
         const response = await this._requester.request(request.method, request.url, request.headers.all, request.body);
-        this._filterResponse(request, response);
+        this._filterResponse(response);
 
         return response;
     }
@@ -86,20 +92,19 @@ class Client extends implementationOf(Interface) implements ClientInterface {
     /**
      * Filters a response, eventually throwing an error in case response status is not successful.
      */
-    protected _filterResponse(request: Request, response: Response): void {
-        if (200 <= response.status && 300 > response.status) {
-            return;
-        }
+    protected _filterResponse(response: ResponseInterface): void {
+        switch (true) {
+            case response instanceof BadResponse:
+                throw new BadRequestException(response as BadResponse);
 
-        switch (response.status) {
-            case 404:
-                throw new NotFoundHttpException(response, request);
+            case response instanceof AccessDeniedResponse:
+                throw new AccessDeniedException(response as AccessDeniedResponse);
 
-            case 400:
-            case 401:
-            case 403:
-            default:
-                throw new HttpException(response.statusText, response, request);
+            case response instanceof NotFoundResponse:
+                throw new NotFoundException(response as NotFoundResponse);
+
+            case response instanceof InvalidResponse:
+                throw new InvalidRequestException(response as InvalidResponse);
         }
     }
 }

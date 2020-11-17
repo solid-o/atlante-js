@@ -1,6 +1,7 @@
 import Headers from '../Requester/Headers';
-import Response from '../Requester/Response';
+import { ResponseInterface } from '../Requester/Response/ResponseInterface';
 
+export interface ClientInterface {}
 export class ClientInterface {
     /**
      * Performs a request to the API service using the given method.
@@ -15,34 +16,31 @@ export class ClientInterface {
      * @throws {NoTokenAvailableException} When no token could be provided for the request.
      */
     // @ts-ignore
-    request<T = any>(method: string, path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> { }
+    request(method: string, path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<ResponseInterface> { }
 
     /**
      * Performs a request to the API service using a GET method.
      */
     // @ts-ignore
-    get<T = any>(path: string, headers?: Record<string, string> | Headers): Promise<Response<T>> { }
+    get(path: string, headers?: Record<string, string> | Headers): Promise<ResponseInterface> { }
 
     /**
      * Performs a request to the API service using a POST method.
      */
     // @ts-ignore
-    post<T = any>(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> { }
+    post(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<ResponseInterface> { }
 
     /**
      * Performs a request to the API service using a PUT method.
      */
     // @ts-ignore
-    put<T = any>(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> { }
+    put(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<ResponseInterface> { }
 
     /**
      * Performs a request to the API service using a PATCH method.
      */
     // @ts-ignore
-    patch<T = any>(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<Response<T>> { }
-}
-
-export interface ClientInterface {
+    patch(path: string, requestData?: any, headers?: Record<string, string> | Headers): Promise<ResponseInterface> { }
 }
 
 export default getInterface(ClientInterface);

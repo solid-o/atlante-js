@@ -1,24 +1,31 @@
-const WebRequester = Solido.Atlante.Requester.WebRequester;
+import { expect } from 'chai';
+
 const Argument = Jymfony.Component.Testing.Argument.Argument;
-const Prophet = Jymfony.Component.Testing.Prophet;
+const TestCase = Jymfony.Component.Testing.Framework.TestCase;
+const WebRequester = Solido.Atlante.Requester.WebRequester;
 const XMLHttpRequest = Solido.Atlante.Stubs.XmlHttpRequest;
 
-const { expect } = require('chai');
-
-describe('[Requester] WebRequester', function () {
-    beforeEach(() => {
-        /**
-         * @type {Jymfony.Component.Testing.Prophet}
-         *
-         * @private
-         */
-        this._prophet = new Prophet();
+export default class WebRequesterTest extends TestCase {
+    __construct() {
+        super.__construct();
 
         /**
          * @type {Jymfony.Component.Testing.Prophecy.ObjectProphecy|Solido.Atlante.Stubs.XMLHttpRequest}
+         *
          * @private
          */
-        const xmlHttp = this._xmlHttp = this._prophet.prophesize(XMLHttpRequest);
+        this._xmlHttp = undefined;
+
+        /**
+         * @type {Solido.Atlante.Requester.WebRequester}
+         *
+         * @private
+         */
+        this._requester = undefined;
+    }
+
+    beforeEach() {
+        const xmlHttp = this._xmlHttp = this.prophesize(XMLHttpRequest);
 
         // Base methods.
         this._xmlHttp.open(Argument.cetera()).willReturn();
@@ -35,40 +42,31 @@ describe('[Requester] WebRequester', function () {
         };
         construct.DONE = XMLHttpRequest.DONE;
 
-        /**
-         * @type {Solido.Atlante.Requester.WebRequester}
-         *
-         * @private
-         */
-        this._requester = new WebRequester(construct);
-    });
+        this._requester = new WebRequester(undefined, construct);
+    }
 
-    afterEach(() => {
-        this._prophet.checkPredictions();
-    });
-
-    it ('should set content-type header if not set', async () => {
+    async testShouldSetContentTypeHeaderIfNotSet() {
         this._xmlHttp.setRequestHeader('Content-Type', 'application/json').shouldBeCalled();
         await this._requester.request('GET', 'resource/subresource');
-    });
+    }
 
-    it ('should not set content-type header if set', async () => {
+    async testShouldNotSetContentTypeHeaderIfSet() {
         this._xmlHttp.setRequestHeader('Content-Type', 'application/json').shouldNotBeCalled();
         this._xmlHttp.setRequestHeader('Content-Type', 'application/octet-stream').shouldBeCalled();
 
         await this._requester.request('GET', 'resource/subresource', { 'Content-Type': 'application/octet-stream' });
-    });
+    }
 
-    it ('should parse response headers correctly', async () => {
+    async testShouldParseResponseHeadersCorrectly() {
         this._xmlHttp.getAllResponseHeaders(Argument.cetera())
             .willReturn('Content-Type: application/octet-stream\r\nDate: 12 Jan 2019 02:00:00 GMT\r\n');
 
         const response = await this._requester.request('GET', 'resource/subresource');
-        expect(response.headers.get('Content-Type')).to.be.eq('application/octet-stream');
-        expect(response.headers.get('Date')).to.be.eq('12 Jan 2019 02:00:00 GMT');
-    });
+        expect(response.getHeaders().get('Content-Type')).to.be.eq('application/octet-stream');
+        expect(response.getHeaders().get('Date')).to.be.eq('12 Jan 2019 02:00:00 GMT');
+    }
 
-    it ('should set report status and statusText correctly', async () => {
+    async testShouldReportStatusCodeCorrectly() {
         this._xmlHttp.send(null).will(function () {
             const o = this.reveal();
             o.status = 418;
@@ -78,7 +76,6 @@ describe('[Requester] WebRequester', function () {
         });
 
         const response = await this._requester.request('GET', 'resource/subresource');
-        expect(response.status).to.be.eq(418);
-        expect(response.statusText).to.be.eq('I\'m a teapot');
-    });
-});
+        expect(response.getStatusCode()).to.be.eq(418);
+    }
+}

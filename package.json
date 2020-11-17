@@ -12,7 +12,7 @@
     "coverage-html": "nyc --reporter=html npm test",
     "lint": "eslint lib/",
     "lint-fix": "eslint --fix lib/",
-    "test": "node ./tests.js \"test/**/*.js\""
+    "test": "node ./tests.js"
   },
   "author": "Alessandro Chitolina <alekitto@gmail.com>",
   "dependencies": {
@@ -25,6 +25,7 @@
     "@jymfony/contracts": "^0.1.0-alpha.28",
     "@jymfony/datetime": "^0.1.0-alpha.28",
     "@jymfony/debug": "^0.1.0-alpha.28",
+    "@jymfony/decorators": "^0.1.0-alpha.28",
     "@jymfony/testing": "^0.1.0-alpha.28",
     "@jymfony/var-dumper": "^0.1.0-alpha.28",
     "@types/node": "^12.12.6",
@@ -42,6 +43,12 @@
     "jymfony-autoload": {
       "namespaces": {
         "Solido.Atlante": "lib"
+      }
+    },
+    "jymfony-autoload-dev": {
+      "namespaces": {
+        "Solido.Atlante.Stubs": "stubs/",
+        "Solido.Atlante.Tests": "test/"
       }
     }
   },

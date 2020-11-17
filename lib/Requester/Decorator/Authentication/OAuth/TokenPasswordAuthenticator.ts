@@ -1,8 +1,10 @@
 import ClientTokenAuthenticator, { ClientTokenAuthenticatorConfiguration } from './ClientTokenAuthenticator';
+import InvalidResponse from '../../../Response/InvalidResponse';
 import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
 import { RequesterInterface } from '../../../RequesterInterface';
-import Response from '../../../Response';
+import { ResponseInterface } from '../../../Response/ResponseInterface';
 import { StorageInterface } from '../../../../Storage/StorageInterface';
+import { TokenResponseDataInterface } from './TokenResponseDataInterface';
 
 interface TokenPasswordAuthenticatorConfiguration extends ClientTokenAuthenticatorConfiguration {
     access_token_key?: string;
@@ -53,7 +55,7 @@ export default class TokenPasswordAuthenticator extends ClientTokenAuthenticator
             const response = await this._request(request.body, request.headers.all);
             await this._storeTokenFromResponse(response);
 
-            return response.data.access_token;
+            return response.getData<TokenResponseDataInterface>().access_token;
         })();
 
         return this.token;
@@ -104,21 +106,21 @@ export default class TokenPasswordAuthenticator extends ClientTokenAuthenticator
         const response = await this._request(request.body, request.headers.all);
         await this._storeTokenFromResponse(response, 'refresh');
 
-        return response.data.access_token;
+        return response.getData<TokenResponseDataInterface>().access_token;
     }
 
     /**
      * Stores the access/refresh tokens from response.
      */
-    protected async _storeTokenFromResponse(response: Response, requestType: 'request' | 'refresh' = 'request'): Promise<void> {
+    protected async _storeTokenFromResponse(response: ResponseInterface, requestType: 'request' | 'refresh' = 'request'): Promise<void> {
         const item = await this._tokenStorage.getItem(this._accessTokenKey);
         const refreshItem = await this._tokenStorage.getItem(this._refreshTokenKey);
 
-        if (200 !== response.status) {
-            throw new NoTokenAvailableException(`Token ${requestType} responded with status ${response.status} (${response.statusText})`);
+        if (response instanceof InvalidResponse) {
+            throw new NoTokenAvailableException(`Token ${requestType} responded with status ${response.getStatusCode()}`);
         }
 
-        const content = response.data;
+        const content = response.getData<TokenResponseDataInterface>();
 
         item.set(content.access_token);
         item.expiresAfter(content.expires_in - 60);

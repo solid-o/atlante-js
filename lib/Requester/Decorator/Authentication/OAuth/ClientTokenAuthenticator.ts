@@ -1,10 +1,12 @@
 import Decorator, { DecoratorInterface } from '../../DecoratorInterface';
 import Headers from '../../../Headers';
+import InvalidResponse from '../../../Response/InvalidResponse';
 import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
 import Request from '../../../Request';
 import { RequesterInterface } from '../../../RequesterInterface';
-import Response from '../../../Response';
+import { ResponseInterface } from '../../../Response/ResponseInterface';
 import { StorageInterface } from '../../../../Storage/StorageInterface';
+import { TokenResponseDataInterface } from './TokenResponseDataInterface';
 
 export interface ClientTokenAuthenticatorConfiguration {
     token_endpoint: string;
@@ -77,11 +79,11 @@ class ClientTokenAuthenticator extends implementationOf(Decorator) implements De
         const request = this._buildTokenRequest({ grant_type: 'client_credentials' });
         const response = await this._request(request.body, request.headers.all);
 
-        if (200 !== response.status) {
-            throw new NoTokenAvailableException(`Client credentials token returned status ${response.status} (${response.statusText})`);
+        if (response instanceof InvalidResponse) {
+            throw new NoTokenAvailableException(`Client credentials token returned status ${response.getStatusCode()}`);
         }
 
-        const content = response.data;
+        const content = response.getData<TokenResponseDataInterface>() ;
         const token = content.access_token;
 
         item.set(token);
@@ -109,7 +111,7 @@ class ClientTokenAuthenticator extends implementationOf(Decorator) implements De
     /**
      * Encodes data and perform POST request.
      */
-    protected _request(data: any, headers?: any): Promise<Response> {
+    protected _request(data: any, headers?: any): Promise<ResponseInterface> {
         if ('json' === this._encoding) {
             headers['Content-Type'] = 'application/json';
             data = JSON.stringify(data);

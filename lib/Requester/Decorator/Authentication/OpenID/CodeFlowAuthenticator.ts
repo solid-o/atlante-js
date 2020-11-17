@@ -1,5 +1,7 @@
 import BaseAuthenticator, { AuthFlowDisplay } from './BaseAuthenticator';
+import InvalidResponse from '../../../Response/InvalidResponse';
 import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
+import { TokenResponseDataInterface } from '../OAuth/TokenResponseDataInterface';
 
 export default
 class CodeFlowAuthenticator extends BaseAuthenticator {
@@ -50,12 +52,12 @@ class CodeFlowAuthenticator extends BaseAuthenticator {
 
             const response = await this._request(request.body, request.headers.all);
 
-            if (200 !== response.status) {
-                throw new NoTokenAvailableException(`Code exchange returned status ${response.status} (${response.statusText})`);
+            if (response instanceof InvalidResponse) {
+                throw new NoTokenAvailableException(`Code exchange returned status ${response.getStatusCode()}`);
             }
 
             await this._storeTokenFromResponse(response);
-            return response.data.access_token;
+            return response.getData<TokenResponseDataInterface>().access_token;
         })();
 
         await this._tokenPromise;

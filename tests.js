@@ -1,6 +1,7 @@
 require('@jymfony/autoloader');
 
 const Debug = Jymfony.Component.Debug.Debug;
+const Runner = Jymfony.Component.Testing.Framework.Runner;
 Debug.enable();
 
 if ('undefined' === typeof URL) {
@@ -9,5 +10,10 @@ if ('undefined' === typeof URL) {
     global.URLSearchParams = URLSearchParams;
 }
 
-require('./stubs/namespace');
-require('mocha/bin/_mocha');
+const [ , , ...argv ] = [ ...process.argv ];
+if (0 === argv.length) {
+    argv.push('test/**/*.js');
+}
+
+process.argv = argv;
+new Runner().run();

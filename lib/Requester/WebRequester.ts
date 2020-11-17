@@ -1,23 +1,26 @@
 import Requester, { RequesterInterface } from './RequesterInterface';
-import Headers from './Headers';
-import Response from './Response';
+import { ResponseFactoryInterface } from './Response/ResponseFactoryInterface';
+import { ResponseInterface } from './Response/ResponseInterface';
+import XhrResponseFactory from './Response/XhrResponseFactory';
 
 export default
 class WebRequester extends implementationOf(Requester) implements RequesterInterface {
+    private readonly _responseFactory: ResponseFactoryInterface;
     private readonly _xmlHttp: typeof XMLHttpRequest;
 
     /**
      * Constructor.
      */
-    constructor(xmlHttp: typeof XMLHttpRequest = XMLHttpRequest) {
+    constructor(responseFactory: ResponseFactoryInterface = new XhrResponseFactory(), xmlHttp: typeof XMLHttpRequest = XMLHttpRequest) {
         super();
+        this._responseFactory = responseFactory;
         this._xmlHttp = xmlHttp;
     }
 
     /**
      * @inheritdoc
      */
-    request<T = any>(method: string, path: string, headers: any = {}, requestData?: any): Promise<Response<T>> {
+    request(method: string, path: string, headers: any = {}, requestData?: any): Promise<ResponseInterface> {
         const xmlHttp: XMLHttpRequest = new this._xmlHttp();
         let contentTypeSet = false;
         xmlHttp.open(method, path);
@@ -40,33 +43,7 @@ class WebRequester extends implementationOf(Requester) implements RequesterInter
                     return;
                 }
 
-                const headers = xmlHttp.getAllResponseHeaders()
-                    .split('\r\n')
-                    .reduce((res, val) => {
-                        if (! val) {
-                            return res;
-                        }
-
-                        const vals = val.split(': ');
-                        return res.add(vals[0], vals[1]);
-                    }, new Headers())
-                ;
-
-                let data = xmlHttp.responseText;
-                if (((headers.get('content-type') || 'text/html') as string).match(/^application\/json/)) {
-                    try {
-                        data = JSON.parse(data);
-                    } catch (e) {
-                        // Do nothing
-                    }
-                }
-
-                resolve({
-                    status: xmlHttp.status,
-                    statusText: xmlHttp.statusText,
-                    headers: headers,
-                    data: data as unknown as T,
-                });
+                resolve(this._responseFactory.fromResponse(xmlHttp));
             };
 
             xmlHttp.send(requestData);

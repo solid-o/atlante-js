@@ -1,4 +1,4 @@
-interface ServerConfigurationProps {
+export interface ServerConfigurationProps {
     issuer: string;
     authorization_endpoint: string;
     token_endpoint: string;

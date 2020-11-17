@@ -1,17 +1,19 @@
-const LocalStorage = require('node-localstorage').LocalStorage;
-const { tmpdir } = require('os');
-localStorage = new LocalStorage(tmpdir() + '/scratch');
+import { AdapterTestCase } from './AdapterTestCase';
+import { LocalStorage } from 'node-localstorage';
+import { tmpdir } from 'os';
 
 const WebLocalStorage = Solido.Atlante.Storage.WebLocalStorage;
-const AdapterTestCase = require('./AdapterTestCase');
 
-describe('[Storage] WebLocalStorage', function () {
-    AdapterTestCase.shouldPassAdapterTests.call(this);
+export default class WebLocalStorageTest extends AdapterTestCase {
+    before() {
+        global.localStorage = new LocalStorage(tmpdir() + '/scratch');
+    }
 
-    this.testBasicUsageWithLongKeys = undefined;
-    this._createCachePool = (defaultLifetime = undefined) => {
+    async testBasicUsageWithLongKeys() {
+        this.markTestSkipped();
+    }
+
+    _createCachePool(defaultLifetime = undefined) {
         return new WebLocalStorage(defaultLifetime);
-    };
-
-    this.run();
-});
+    }
+}

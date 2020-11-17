@@ -1,26 +1,28 @@
-const ProvidedTokenStorage = Solido.Atlante.Storage.ProvidedTokenStorage;
-const { expect } = require('chai');
+import { expect } from 'chai';
 
-describe('[Storage] ProvidedTokenStorage', function () {
-    it ('has only access_token and refresh_token items', async () => {
+const ProvidedTokenStorage = Solido.Atlante.Storage.ProvidedTokenStorage;
+const TestCase = Jymfony.Component.Testing.Framework.TestCase;
+
+export default class ProvidedTokenStorageTest extends TestCase {
+    async testHasOnlyAccessTokenAndRefreshTokenItems() {
         const storage = new ProvidedTokenStorage('access', 'refresh');
 
         expect(await storage.hasItem('access_token')).to.be.true;
         expect(await storage.hasItem('refresh_token')).to.be.true;
         expect(await storage.hasItem('foobar')).to.be.false;
-    });
+    }
 
-    it ('has no items by default', async () => {
+    async testHasNotItemsByDefault() {
         const storage = new ProvidedTokenStorage();
 
         expect(await storage.hasItem('access_token')).to.be.false;
         expect(await storage.hasItem('refresh_token')).to.be.false;
         expect(await storage.hasItem('foobar')).to.be.false;
-    });
+    }
 
-    it ('getItem should return an item', async () => {
+    async testGetItemShouldReturnAnItem() {
         const storage = new ProvidedTokenStorage('access', 'refresh');
         expect((await storage.getItem('access_token')).get()).to.be.eq('access');
         expect((await storage.getItem('refresh_token')).get()).to.be.eq('refresh');
-    });
-});
+    }
+}
