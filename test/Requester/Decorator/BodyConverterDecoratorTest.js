@@ -18,10 +18,11 @@ export default class BodyConverterDecoratorTest extends TestCase {
     @dataProvider('provideDecorateCases')
     testDecorateBody(given, expected) {
         const decorator = new BodyConverterDecorator();
-        const decorated = decorator.decorate(createRequest('GET', '/example.com', null, given));
+        const request = createRequest('GET', '/example.com', null, given);
+        const decorated = decorator.decorate(request);
 
         const body = decorated.body;
-        expect(isFunction(body) ? body() : body).to.be.equal(expected);
+        expect(isFunction(body) ? body(request) : body).to.be.equal(expected);
     }
 
     * provideDecorateCases() {
@@ -52,10 +53,11 @@ export default class BodyConverterDecoratorTest extends TestCase {
     @dataProvider('provideContents')
     testContentType(givenHeaders, expectedHeaders, expectedContent) {
         const decorator = new BodyConverterDecorator();
-        const decorated = decorator.decorate(createRequest('GET', '/example.com', givenHeaders, { foo: 'bar', bar: ['bar', 'bar'] }));
+        const request = createRequest('GET', '/example.com', givenHeaders, { foo: 'bar', bar: ['bar', 'bar'] });
+        const decorated = decorator.decorate(request);
 
         const body = decorated.body;
-        expect(isFunction(body) ? body() : body).to.be.equal(expectedContent);
+        expect(isFunction(body) ? body(request) : body).to.be.equal(expectedContent);
     }
 
     * provideContents() {
@@ -67,7 +69,8 @@ export default class BodyConverterDecoratorTest extends TestCase {
 
     testUnexpectedContentType() {
         const decorator = new BodyConverterDecorator();
-        const decorated = decorator.decorate(createRequest('GET', '/example.com', {'content-type': 'multipart/form-data'}, { foo: 'bar' }));
+        const request = createRequest('GET', '/example.com', {'content-type': 'multipart/form-data'}, { foo: 'bar' });
+        const decorated = decorator.decorate(request);
 
         this.expectException(UnexpectedValueException);
         this.expectExceptionMessage('Unable to convert Request content body: expected "application/json" or "application/x-www-form-urlencoded" `content-type` header, "multipart/form-data" given');
@@ -77,6 +80,6 @@ export default class BodyConverterDecoratorTest extends TestCase {
             return;
         }
 
-        body();
+        body(request);
     }
 }

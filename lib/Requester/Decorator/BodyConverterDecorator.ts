@@ -11,6 +11,13 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
     decorate(request: Request<any>): Request<any> {
         let { body = null, method, url, headers } = request;
         if (body && 'string' !== typeof body && ! isBlob(body)) {
+            const contentType = headers.get('content-type');
+
+            // Add content-type if not specified
+            if (contentType === undefined) {
+                headers.set('content-type', 'application/json');
+            }
+
             const originalBody = body;
             body = () => {
                 let body = this._prepare(originalBody);
@@ -30,13 +37,7 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
      * @private
      */
     static _encodeIterable(body, headers) {
-        let contentType = headers.get('content-type');
-
-        // Add content-type if not specified
-        if (contentType === undefined) {
-            contentType = 'application/json';
-            headers.set('content-type', contentType);
-        }
+        const contentType = headers.get('content-type');
 
         if (contentType.match(/^application\/json/)) {
             body = JSON.stringify(body);
@@ -63,7 +64,7 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
     }
 
     _prepare(body) {
-        if (undefined === body || null === body || 'string' === typeof body) {
+        if (undefined === body || null === body || 'string' === typeof body || 'number' === typeof body) {
             return body;
         }
 
