@@ -1,6 +1,8 @@
 import { expect } from 'chai';
+import {createRequest} from '../../lib/Requester/Request';
 
 const Argument = Jymfony.Component.Testing.Argument.Argument;
+const BodyConverterDecorator = Solido.Atlante.Requester.Decorator.BodyConverterDecorator;
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
 const WebRequester = Solido.Atlante.Requester.WebRequester;
 const XMLHttpRequest = Solido.Atlante.Stubs.XmlHttpRequest;
@@ -77,5 +79,21 @@ export default class WebRequesterTest extends TestCase {
 
         const response = await this._requester.request('GET', 'resource/subresource');
         expect(response.getStatusCode()).to.be.eq(418);
+    }
+
+    async testShouldWorkWithBodyConverterDecorator() {
+        const request = createRequest('POST', 'http://www.example.org', null, { test: 'foo' });
+        const decorator = new BodyConverterDecorator();
+
+        const decorated = decorator.decorate(request);
+        this._xmlHttp.send('{"test":"foo"}')
+            .shouldBeCalled()
+            .will(function () {
+                const o = this.reveal();
+                o.readyState = XMLHttpRequest.DONE;
+                o.onreadystatechange();
+            });
+
+        await this._requester.request(decorated.method, decorated.url, decorated.headers, decorated.body);
     }
 }

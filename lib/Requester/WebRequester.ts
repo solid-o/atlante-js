@@ -26,7 +26,7 @@ class WebRequester extends implementationOf(Requester) implements RequesterInter
         xmlHttp.open(method, path);
 
         if ('function' === typeof requestData) {
-            requestData({ method, path, headers });
+            requestData = requestData();
         }
 
         for (const [ key, value ] of Object.entries(headers)) {
