@@ -30,6 +30,7 @@ export default class BodyConverterDecoratorTest extends TestCase {
 
         const a = { foo: 'bar', bar: ['foo', 'foobar'] };
         yield [ a, JSON.stringify(a) ];
+        yield [ new Date('2020-11-18T19:38:16.430Z'), '"2020-11-18T19:38:16.430Z"' ];
         yield [ () => 'foobar', '"foobar"' ];
 
         yield [

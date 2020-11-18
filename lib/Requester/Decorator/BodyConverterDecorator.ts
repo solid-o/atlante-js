@@ -68,6 +68,10 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
             return body;
         }
 
+        if (body instanceof Date) {
+            return body.toISOString();
+        }
+
         if (isFunction(body)) {
             return this._prepare(body());
         }
@@ -88,6 +92,6 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
             return iterated;
         }
 
-        throw new InvalidArgumentException('Argument #1 passed to BodyConverterDecorator._prepare has to be null, string, Blob, iterable or function, "' + typeof body + '" given');
+        throw new InvalidArgumentException('Argument #1 passed to BodyConverterDecorator._prepare has to be null, string, number, Date, Blob, iterable or function, "' + typeof body + '" given');
     }
 }
