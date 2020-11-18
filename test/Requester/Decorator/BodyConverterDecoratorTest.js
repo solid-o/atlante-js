@@ -22,7 +22,7 @@ export default class BodyConverterDecoratorTest extends TestCase {
         const decorated = decorator.decorate(request);
 
         const body = decorated.body;
-        expect(isFunction(body) ? body(request) : body).to.be.equal(expected);
+        expect(isFunction(body) ? body() : body).to.be.equal(expected);
     }
 
     * provideDecorateCases() {
@@ -57,14 +57,16 @@ export default class BodyConverterDecoratorTest extends TestCase {
         const decorated = decorator.decorate(request);
 
         const body = decorated.body;
-        expect(isFunction(body) ? body(request) : body).to.be.equal(expectedContent);
+        expect(isFunction(body) ? body() : body).to.be.equal(expectedContent);
     }
 
     * provideContents() {
         yield [ {'content-type': 'application/json'}, {'content-type': 'application/json'}, '{"foo":"bar","bar":["bar","bar"]}' ];
         yield [ null, {'content-type': 'application/json'}, '{"foo":"bar","bar":["bar","bar"]}' ];
+        yield [ null, {'content-type': 'application/merge-patch+json'}, '{"foo":"bar","bar":["bar","bar"]}' ];
         yield [ {'x-foo': 'bar'}, {'content-type': 'application/json', 'x-foo': 'bar'}, '{"foo":"bar","bar":["bar","bar"]}' ];
         yield [ {'content-type': 'application/x-www-form-urlencoded'}, {'content-type': 'application/x-www-form-urlencoded'}, 'foo=bar&bar%5B0%5D=bar&bar%5B1%5D=bar' ];
+        yield [ {'content-type': 'application/merge-patch+x-www-form-urlencoded'}, {'content-type': 'application/merge-patch+x-www-form-urlencoded'}, 'foo=bar&bar%5B0%5D=bar&bar%5B1%5D=bar' ];
     }
 
     testUnexpectedContentType() {
@@ -73,13 +75,13 @@ export default class BodyConverterDecoratorTest extends TestCase {
         const decorated = decorator.decorate(request);
 
         this.expectException(UnexpectedValueException);
-        this.expectExceptionMessage('Unable to convert Request content body: expected "application/json" or "application/x-www-form-urlencoded" `content-type` header, "multipart/form-data" given');
+        this.expectExceptionMessage('Unable to convert Request content body: expected "application/json", "application/x-www-form-urlencoded", "application/merge-patch+json" or "application/merge-patch+x-www-form-urlencoded" `content-type` header, "multipart/form-data" given');
 
         const body = decorated.body;
         if (! isFunction(body)) {
             return;
         }
 
-        body(request);
+        body();
     }
 }

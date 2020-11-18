@@ -39,9 +39,9 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
     static _encodeIterable(body, headers) {
         const contentType = headers.get('content-type');
 
-        if (contentType.match(/^application\/json/)) {
+        if (contentType.match(/^application\/(?:merge-patch\+)?json/)) {
             body = JSON.stringify(body);
-        } else if (contentType.match(/^application\/x-www-form-urlencoded/)) {
+        } else if (contentType.match(/^application\/(?:merge-patch\+)?x-www-form-urlencoded/)) {
             const p = {};
             const encodeParams = (iterable, prefix = null) => {
                 for (const [ k, v ] of Object.entries(iterable)) {
@@ -57,7 +57,7 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
             encodeParams(body);
             body = (new URLSearchParams(p)).toString();
         } else {
-            throw new UnexpectedValueException(`Unable to convert Request content body: expected "application/json" or "application/x-www-form-urlencoded" \`content-type\` header, "${contentType}" given`);
+            throw new UnexpectedValueException(`Unable to convert Request content body: expected "application/json", "application/x-www-form-urlencoded", "application/merge-patch+json" or "application/merge-patch+x-www-form-urlencoded" \`content-type\` header, "${contentType}" given`);
         }
 
         return body;
