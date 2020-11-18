@@ -165,7 +165,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
                 }
             });
 
-            removeFrame();
+            document.body.appendChild(frame);
         });
 
         return Promise.race([
