@@ -64,7 +64,7 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
     }
 
     _prepare(body) {
-        if (undefined === body || null === body || 'string' === typeof body || 'number' === typeof body) {
+        if (undefined === body || null === body || 'string' === typeof body || 'number' === typeof body || 'boolean' === typeof body) {
             return body;
         }
 
@@ -92,6 +92,6 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
             return iterated;
         }
 
-        throw new InvalidArgumentException('Argument #1 passed to BodyConverterDecorator._prepare has to be null, string, number, Date, Blob, iterable or function, "' + typeof body + '" given');
+        throw new InvalidArgumentException('Argument #1 passed to BodyConverterDecorator._prepare has to be null, string, number, boolean, Date, Blob, iterable or function, "' + typeof body + '" given');
     }
 }
