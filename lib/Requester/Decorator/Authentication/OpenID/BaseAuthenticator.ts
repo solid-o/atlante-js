@@ -54,7 +54,7 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
     /**
      * Starts the authorization flow (code or implicit).
      */
-    abstract async startAuthorization(callbackUri: string, display?: AuthFlowDisplay, state?: string): Promise<never>;
+    abstract startAuthorization(callbackUri: string, display?: AuthFlowDisplay, state?: string): Promise<never>;
 
     /**
      * Get the current token information (using token introspection endpoint).

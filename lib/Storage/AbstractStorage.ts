@@ -58,7 +58,7 @@ abstract class AbstractStorage extends implementationOf(Storage) implements Stor
     /**
      * @inheritdoc
      */
-    async abstract hasItem(key: string): Promise<boolean>;
+    abstract hasItem(key: string): Promise<boolean>;
 
     /**
      * @inheritdoc
@@ -70,7 +70,7 @@ abstract class AbstractStorage extends implementationOf(Storage) implements Stor
     /**
      * @inheritdoc
      */
-    async abstract deleteItem(key: string): Promise<boolean>;
+    abstract deleteItem(key: string): Promise<boolean>;
 
     /**
      * @inheritdoc
@@ -109,10 +109,10 @@ abstract class AbstractStorage extends implementationOf(Storage) implements Stor
     /**
      * Gets an item from the storage, if not expired.
      */
-    protected async abstract _getItem(key: string): Promise<string>;
+    protected abstract _getItem(key: string): Promise<string>;
 
     /**
      * Stores an item into the storage.
      */
-    protected async abstract _save(key: string, value: string, expiry: Date): Promise<boolean>;
+    protected abstract _save(key: string, value: string, expiry: Date): Promise<boolean>;
 }
