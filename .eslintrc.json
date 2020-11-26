@@ -69,7 +69,7 @@
     "no-new-symbol": "error",
     "no-new-wrappers": "error",
     "no-proto": "error",
-    "no-redeclare": "error",
+    "no-redeclare": "warn",
     "no-restricted-properties": "error",
     "no-tabs": "error",
     "no-template-curly-in-string": "error",
