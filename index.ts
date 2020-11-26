@@ -21,6 +21,7 @@
 /// <reference path="lib/Requester/Header/Accept.ts" />
 /// <reference path="lib/Requester/Header/BaseAccept.ts" />
 /// <reference path="lib/Requester/Response/AbstractResponse.ts" />
+/// <reference path="lib/Requester/Response/AbstractResponseFactory.ts" />
 /// <reference path="lib/Requester/Response/AccessDeniedResponse.ts" />
 /// <reference path="lib/Requester/Response/BadResponse.ts" />
 /// <reference path="lib/Requester/Response/BadResponsePropertyTree.ts" />
