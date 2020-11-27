@@ -3,6 +3,7 @@
     "declaration": true,
     "inlineSourceMap": true,
     "inlineSources": true,
+    "moduleResolution": "node",
     "noImplicitAny": false,
     "target": "ES2017",
     "typeRoots": [

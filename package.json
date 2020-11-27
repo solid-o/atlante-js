@@ -16,8 +16,7 @@
   },
   "author": "Alessandro Chitolina <alekitto@gmail.com>",
   "dependencies": {
-    "@jymfony/util": "^0.1.0-alpha.28",
-    "@types/chai": "^4.2.11"
+    "@jymfony/util": "^0.1.0-alpha.28"
   },
   "devDependencies": {
     "@jymfony/autoloader": "^0.1.0-alpha.28",
@@ -28,6 +27,7 @@
     "@jymfony/decorators": "^0.1.0-alpha.28",
     "@jymfony/testing": "^0.1.0-alpha.28",
     "@jymfony/var-dumper": "^0.1.0-alpha.28",
+    "@types/chai": "^4.2.11",
     "@types/node": "^12.19.6",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
     "@typescript-eslint/parser": "^4.8.2",
