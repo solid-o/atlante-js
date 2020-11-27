@@ -1,5 +1,5 @@
+import { createRequest } from '../../lib/Requester/Request';
 import { expect } from 'chai';
-import {createRequest} from '../../lib/Requester/Request';
 
 const Argument = Jymfony.Component.Testing.Argument.Argument;
 const BodyConverterDecorator = Solido.Atlante.Requester.Decorator.BodyConverterDecorator;
