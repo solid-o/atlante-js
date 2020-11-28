@@ -10,7 +10,7 @@ import { ResponseInterface } from './ResponseInterface';
 export default
 abstract class AbstractResponseFactory extends implementationOf(IResponseFactory) implements ResponseFactoryInterface {
     protected makeResponse(content: string, headers: Headers, statusCode: number): ResponseInterface {
-        const data = AbstractResponseFactory.decodeData(content, headers);
+        const data = this.decodeData(content, headers);
 
         if (Array.isArray(data) || isObjectLiteral(data)) {
             if (300 > statusCode && 200 <= statusCode) {
@@ -32,7 +32,7 @@ abstract class AbstractResponseFactory extends implementationOf(IResponseFactory
         return new InvalidResponse(statusCode, headers, data);
     }
 
-    private static decodeData(responseText: string, headers: Headers) {
+    protected decodeData(responseText: string, headers: Headers) {
         let data = responseText;
         if (((headers.get('content-type') || 'text/html') as string).match(/^application\/json/)) {
             try {
