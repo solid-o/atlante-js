@@ -82,7 +82,17 @@ export default class TokenPasswordAuthenticator extends ClientTokenAuthenticator
             return item.get();
         }
 
-        const refreshed = await this._refreshToken();
+        let refreshed = null;
+        try {
+            refreshed = await this._refreshToken();
+        } catch (e) {
+            if (! (e instanceof NoTokenAvailableException)) {
+                throw e;
+            }
+
+            await this._tokenStorage.clear();
+        }
+
         if (null === refreshed) {
             return await super._getToken();
         }
