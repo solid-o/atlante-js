@@ -5,7 +5,7 @@ import { ResponseFactoryInterface } from './Response/ResponseFactoryInterface';
 import { ResponseInterface } from './Response/ResponseInterface';
 
 export default
-class WebRequester extends implementationOf(Requester) implements RequesterInterface {
+class AxiosRequester extends implementationOf(Requester) implements RequesterInterface {
     private readonly _responseFactory: ResponseFactoryInterface;
     private readonly _requester: typeof axios;
 
