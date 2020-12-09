@@ -33,8 +33,10 @@ abstract class AbstractResponseFactory extends implementationOf(IResponseFactory
     }
 
     protected decodeData(responseText: string, headers: Headers) {
+        const contentType = (headers.get('content-type') ?? 'text/html') as string;
         let data = responseText;
-        if (((headers.get('content-type') || 'text/html') as string).match(/^application\/json/)) {
+
+        if (contentType.match(/^application\/(?:.+\+)?json/)) {
             try {
                 data = JSON.parse(data);
             } catch (e) {
