@@ -1,5 +1,5 @@
 import Requester, { RequesterInterface } from './RequesterInterface';
-import axios, { Method } from 'axios';
+import axios, { AxiosInstance, AxiosStatic, Method } from 'axios';
 import AxiosResponseFactory from './Response/AxiosResponseFactory';
 import { ResponseFactoryInterface } from './Response/ResponseFactoryInterface';
 import { ResponseInterface } from './Response/ResponseInterface';
@@ -7,12 +7,12 @@ import { ResponseInterface } from './Response/ResponseInterface';
 export default
 class AxiosRequester extends implementationOf(Requester) implements RequesterInterface {
     private readonly _responseFactory: ResponseFactoryInterface;
-    private readonly _requester: typeof axios;
+    private readonly _requester: AxiosStatic | AxiosInstance;
 
     /**
      * Constructor.
      */
-    constructor(responseFactory: ResponseFactoryInterface = new AxiosResponseFactory(), requester: typeof axios = axios) {
+    constructor(responseFactory: ResponseFactoryInterface = new AxiosResponseFactory(), requester: AxiosStatic | AxiosInstance = axios) {
         super();
         this._responseFactory = responseFactory;
         this._requester = requester;
