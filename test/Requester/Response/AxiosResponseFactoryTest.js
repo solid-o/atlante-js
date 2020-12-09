@@ -43,6 +43,9 @@ export default class AxiosResponseFactoryTest extends TestCase {
         statusCode = 201;
         yield [ mock(statusCode, content, headers), Response, statusCode, { _id: 'foo' } ];
 
+        statusCode = 204;
+        yield [ mock(statusCode, content, headers), Response, statusCode, '' ];
+
         statusCode = 400;
         content = '{"name":"foo","errors":["Required."],"children":[]}';
 

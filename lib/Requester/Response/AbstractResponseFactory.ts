@@ -10,8 +10,11 @@ import { ResponseInterface } from './ResponseInterface';
 export default
 abstract class AbstractResponseFactory extends implementationOf(IResponseFactory) implements ResponseFactoryInterface {
     protected makeResponse(content: string, headers: Headers, statusCode: number): ResponseInterface {
-        const data = this.decodeData(content, headers);
+        if (204 === statusCode) {
+            return new Response(statusCode, headers, '');
+        }
 
+        const data = this.decodeData(content, headers);
         if (Array.isArray(data) || isObjectLiteral(data)) {
             if (300 > statusCode && 200 <= statusCode) {
                 return new Response(statusCode, headers, data);
