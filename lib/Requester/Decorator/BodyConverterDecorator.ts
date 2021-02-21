@@ -32,7 +32,6 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
         return { body, method, url, headers };
     }
 
-
     /**
      * @private
      */
