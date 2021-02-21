@@ -70,11 +70,11 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
                 (errorHint ? '\nHint: ' + decodeURIComponent(errorHint) : '');
 
             window.parent.postMessage(data, '*');
-            throw new NoTokenAvailableException(errorMessage);
+            throw new NoTokenAvailableException(undefined, errorMessage);
         }
 
         if (undefined !== state && params.get('state') !== state) {
-            throw new NoTokenAvailableException('Invalid state returned');
+            throw new NoTokenAvailableException(undefined, 'Invalid state returned');
         }
 
         const item = await this._tokenStorage.getItem(this._accessTokenKey);
@@ -98,7 +98,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
      */
     protected async _refreshToken(): Promise<string | null> {
         if (undefined === window) {
-            throw new NoTokenAvailableException('Implicit flow called from a non-browser environment');
+            throw new NoTokenAvailableException(undefined, 'Implicit flow called from a non-browser environment');
         }
 
         const item = await this._tokenStorage.getItem(this._idTokenKey);
@@ -146,7 +146,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
             frame.style.height = '0';
             frame.src = authorizationUrl.href;
             frame.onerror = reject;
-            frame.onabort = () => reject(new NoTokenAvailableException('Refresh token request has been aborted.'));
+            frame.onabort = () => reject(new NoTokenAvailableException(undefined, 'Refresh token request has been aborted.'));
 
             window.addEventListener('message', (event) => {
                 if (! event.data || 'implicit_flow_refresh' !== event.data.event) {
@@ -159,7 +159,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
                 if ('login_required' === event.data.error) {
                     resolve(null);
                 } else if (event.data.error) {
-                    reject(new NoTokenAvailableException('Refresh token returned "' + event.data.error + '"'));
+                    reject(new NoTokenAvailableException(undefined, 'Refresh token returned "' + event.data.error + '"'));
                 } else {
                     resolve(event.data.access_token);
                 }
@@ -177,7 +177,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
                     }
 
                     removeFrame();
-                    reject(new NoTokenAvailableException('Timed out while refreshing access token'));
+                    reject(new NoTokenAvailableException(undefined, 'Timed out while refreshing access token'));
                 }, 60000);
             }),
         ]);

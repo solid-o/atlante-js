@@ -35,7 +35,7 @@ abstract class AbstractResponseFactory extends implementationOf(IResponseFactory
         return new InvalidResponse(statusCode, headers, data);
     }
 
-    protected decodeData(responseText: string, headers: Headers) {
+    protected decodeData(responseText: string, headers: Headers): unknown {
         const contentType = (headers.get('content-type') ?? 'text/html') as string;
         let data = responseText;
 

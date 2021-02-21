@@ -53,7 +53,7 @@ class CodeFlowAuthenticator extends BaseAuthenticator {
             const response = await this._request(request.body, request.headers.all);
 
             if (response instanceof InvalidResponse) {
-                throw new NoTokenAvailableException(`Code exchange returned status ${response.getStatusCode()}`);
+                throw new NoTokenAvailableException(response, `Code exchange returned status ${response.getStatusCode()}`);
             }
 
             await this._storeTokenFromResponse(response);

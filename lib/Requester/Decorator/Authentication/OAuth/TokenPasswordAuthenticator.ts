@@ -127,7 +127,7 @@ export default class TokenPasswordAuthenticator extends ClientTokenAuthenticator
         const refreshItem = await this._tokenStorage.getItem(this._refreshTokenKey);
 
         if (response instanceof InvalidResponse) {
-            throw new NoTokenAvailableException(`Token ${requestType} responded with status ${response.getStatusCode()}`);
+            throw new NoTokenAvailableException(response, `Token ${requestType} responded with status ${response.getStatusCode()}`);
         }
 
         const content = response.getData<TokenResponseDataInterface>();

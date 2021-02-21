@@ -80,7 +80,7 @@ class ClientTokenAuthenticator extends implementationOf(Decorator) implements De
         const response = await this._request(request.body, request.headers.all);
 
         if (response instanceof InvalidResponse) {
-            throw new NoTokenAvailableException(`Client credentials token returned status ${response.getStatusCode()}`);
+            throw new NoTokenAvailableException(response, `Client credentials token returned status ${response.getStatusCode()}`);
         }
 
         const content = response.getData<TokenResponseDataInterface>() ;
