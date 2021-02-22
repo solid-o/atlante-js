@@ -32,7 +32,7 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
     private readonly _authMethod: 'client_secret_basic' | 'client_secret_post';
     private readonly _postLogoutRedirectUri: string | null;
 
-    protected constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: OpenidAuthenticatorConfiguration) {
+    constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: OpenidAuthenticatorConfiguration) {
         super(requester, tokenStorage, {
             ...config,
             token_endpoint: '',
