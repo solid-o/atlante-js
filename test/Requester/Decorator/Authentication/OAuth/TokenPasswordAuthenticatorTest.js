@@ -1,5 +1,3 @@
-import { @dataProvider } from '@jymfony/decorators';
-import { createRequest } from '../../../../../lib/Requester/Request';
 import { expect } from 'chai';
 
 const BadResponse = Solido.Atlante.Requester.Response.BadResponse;
