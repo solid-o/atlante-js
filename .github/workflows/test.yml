@@ -12,7 +12,7 @@ jobs:
                     - '14'
                     - '15'
 
-        name: Node.JS ${{ matrix.php_version }}
+        name: Node.JS ${{ matrix.node_version }}
         steps:
             - uses: actions/checkout@v2
 

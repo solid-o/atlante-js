@@ -1,41 +1,26 @@
 Solido - Atlante
 ================
-[![Build Status](https://travis-ci.com/solid-o/atlante-js.svg?branch=master)](https://travis-ci.com/solid-o/atlante-js)
+[![Tests](https://github.com/solid-o/atlante-js/actions/workflows/test.yml/badge.svg)](https://github.com/solid-o/atlante-js/actions/workflows/test.yml)
 
 Solido Atlante is an javascript HTTP Client.
 
 Requirements
 ------------
-- node >= 10
+- node >= 10 (or a modern browser)
 - `@jymfony/util`
 
 Installation
 ------------
-The suggested installation method is via [yarn](https://yarnpkg.com/):
-
-```sh
-$ yarn add @solido/atlante
-```
-
-But you can also install it via [npm](https://npmjs.com//):
-
 ```sh
 $ npm install @solido/atlante
 ```
 
 Using Atlante
 -------------
-Work in progress
+You can read the [dedicated section on Solido documentation](https://solid-o.github.io/docs/#/atlante?id=atlante).
 
 Test
 ----
-Just run
-```sh
-$ yarn test
-```
-
-or
-
 ```sh
 $ npm test
 ```
