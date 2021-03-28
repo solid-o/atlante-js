@@ -1,4 +1,4 @@
-const _WEBPACK_REQUIRE_ = 'function' === typeof require ? require : undefined;
+const _WEBPACK_REQUIRE_ = globalThis.require;
 const crypto = 'function' === typeof _WEBPACK_REQUIRE_ ? _WEBPACK_REQUIRE_('crypto') : undefined;
 
 const base64Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
