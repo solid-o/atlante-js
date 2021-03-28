@@ -5,6 +5,8 @@ import { TokenResponseDataInterface } from '../OAuth/TokenResponseDataInterface'
 
 export default
 class CodeFlowAuthenticator extends BaseAuthenticator {
+    private _authPromise: Promise<string>;
+
     /**
      * @inheritdoc
      */
@@ -37,7 +39,7 @@ class CodeFlowAuthenticator extends BaseAuthenticator {
      * Exchanges an authorization code with an access token.
      */
     async authenticateFromCode(code: string, callbackUri: string): Promise<void> {
-        this._tokenPromise = this._tokenPromise || (async () => {
+        this._authPromise = this._authPromise || (async () => {
             const configuration = await this._openidConfiguration;
             this._tokenEndpoint = configuration.tokenEndpoint;
 
@@ -60,6 +62,6 @@ class CodeFlowAuthenticator extends BaseAuthenticator {
             return response.getData<TokenResponseDataInterface>().access_token;
         })();
 
-        await this._tokenPromise;
+        await (this._tokenPromise = this._authPromise);
     }
 }

@@ -1,3 +1,6 @@
+const _WEBPACK_REQUIRE_ = 'function' === typeof require ? require : undefined;
+const crypto = 'function' === typeof _WEBPACK_REQUIRE_ ? _WEBPACK_REQUIRE_('crypto') : undefined;
+
 const base64Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 export const base64Encode = buf => {
     const l = buf.length;
@@ -27,11 +30,7 @@ export const generateRandomString = (bytes = 16) => {
     if ('undefined' !== typeof window && 'undefined' !== typeof window.crypto) {
         window.crypto.getRandomValues(buf);
     } else {
-        let crypto;
-        if ('function' === typeof require) {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            crypto = require('crypto');
-        } else {
+        if (undefined === crypto) {
             throw Error('Cannot retrieve a valid random values generator');
         }
 
@@ -52,11 +51,7 @@ export const sha256 = async (message: string) => {
         return base64Encode(new Uint8Array(hashBuffer));
     }
 
-    let crypto;
-    if ('function' === typeof require) {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        crypto = require('crypto');
-    } else {
+    if (undefined === crypto) {
         throw Error('Cannot retrieve a valid crypto module');
     }
 
