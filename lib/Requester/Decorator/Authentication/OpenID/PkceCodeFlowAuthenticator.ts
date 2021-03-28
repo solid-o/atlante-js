@@ -1,81 +1,14 @@
 import BaseAuthenticator, { AuthFlowDisplay } from './BaseAuthenticator';
+import { generateRandomString, sha256 } from '../../../../Utils/Crypto';
 import InvalidResponse from '../../../Response/InvalidResponse';
 import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
+import { ResponseInterface } from '../../../Response/ResponseInterface';
 import { TokenResponseDataInterface } from '../OAuth/TokenResponseDataInterface';
-
-const base64Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-const base64Encode = buf => {
-    const l = buf.length;
-    let result = '', i;
-
-    for (i = 2; i < l; i += 3) {
-        result += base64Alphabet[buf[i - 2] >> 2];
-        result += base64Alphabet[((buf[i - 2] & 0x03) << 4) | (buf[i - 1] >> 4)];
-        result += base64Alphabet[((buf[i - 1] & 0x0F) << 2) | (buf[i] >> 6)];
-        result += base64Alphabet[buf[i] & 0x3F];
-    }
-    if (i === l + 1) { // 1 octet yet to write
-        result += base64Alphabet[buf[i - 2] >> 2];
-        result += base64Alphabet[(buf[i - 2] & 0x03) << 4];
-    }
-    if (i === l) { // 2 octets yet to write
-        result += base64Alphabet[buf[i - 2] >> 2];
-        result += base64Alphabet[((buf[i - 2] & 0x03) << 4) | (buf[i - 1] >> 4)];
-        result += base64Alphabet[(buf[i - 1] & 0x0F) << 2];
-    }
-
-    return result;
-};
-
-const generateRandomString = (bytes = 16) => {
-    const buf = new Uint8Array(bytes);
-    if ('undefined' !== typeof window && 'undefined' !== typeof window.crypto) {
-        window.crypto.getRandomValues(buf);
-    } else {
-        let crypto;
-        if ('function' === typeof require) {
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            crypto = require('crypto');
-        } else {
-            throw Error('Cannot retrieve a valid random values generator');
-        }
-
-        const data = crypto.randomBytes(bytes).toJSON().data;
-        for (let i = 0; i < data.length; ++i) {
-            buf[i] = data[i];
-        }
-    }
-
-    return base64Encode(buf);
-};
-
-const sha256 = async (message: string) => {
-    if ('undefined' !== typeof window && 'undefined' !== typeof window.crypto) {
-        const msgUint8 = new TextEncoder().encode(message);
-        const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgUint8);
-
-        return base64Encode(new Uint8Array(hashBuffer));
-    }
-
-    let crypto;
-    if ('function' === typeof require) {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        crypto = require('crypto');
-    } else {
-        throw Error('Cannot retrieve a valid crypto module');
-    }
-
-    return crypto
-        .createHash('sha256')
-        .update(message)
-        .digest('base64')
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_')
-    ;
-};
 
 export default
 class PkceCodeFlowAuthenticator extends BaseAuthenticator {
+    private _authPromise: Promise<string>;
+
     /**
      * @inheritdoc
      */
@@ -116,7 +49,7 @@ class PkceCodeFlowAuthenticator extends BaseAuthenticator {
      * Exchanges an authorization code with an access token.
      */
     async authenticateFromCode(code: string, state: string, callbackUri: string): Promise<void> {
-        this._tokenPromise = this._tokenPromise || (async () => {
+        this._authPromise = this._authPromise || (async () => {
             const configuration = await this._openidConfiguration;
             this._tokenEndpoint = configuration.tokenEndpoint;
 
@@ -135,15 +68,20 @@ class PkceCodeFlowAuthenticator extends BaseAuthenticator {
                 audience: this._audience,
             });
 
-            const response = await this._request(request.body, request.headers.all);
-            if (response instanceof InvalidResponse) {
-                throw new NoTokenAvailableException(response, `Code exchange returned status ${response.getStatusCode()}`);
+            let response: ResponseInterface;
+            try {
+                response = await this._request(request.body, request.headers.all);
+                if (response instanceof InvalidResponse) {
+                    throw new NoTokenAvailableException(response, `Code exchange returned status ${response.getStatusCode()}`);
+                }
+            } finally {
+                await this._tokenStorage.deleteItem(verifierItem.key);
             }
 
             await this._storeTokenFromResponse(response);
             return response.getData<TokenResponseDataInterface>().access_token;
         })();
 
-        await this._tokenPromise;
+        await (this._tokenPromise = this._authPromise);
     }
 }

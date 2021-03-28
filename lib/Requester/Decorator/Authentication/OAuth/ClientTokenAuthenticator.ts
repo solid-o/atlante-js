@@ -43,7 +43,7 @@ class ClientTokenAuthenticator extends implementationOf(Decorator) implements De
         this._clientId = config.client_id;
         this._clientSecret = config.client_secret;
         this._tokenPromise = null;
-        this._clientTokenKey = config.client_token_key;
+        this._clientTokenKey = config.client_token_key || 'client_access_token';
         this._encoding = config.data_encoding;
     }
 
