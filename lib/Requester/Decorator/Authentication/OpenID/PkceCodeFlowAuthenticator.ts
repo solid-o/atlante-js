@@ -33,7 +33,7 @@ class PkceCodeFlowAuthenticator extends BaseAuthenticator {
         authorizationUrl.searchParams.append('redirect_uri', callbackUri);
         authorizationUrl.searchParams.append('display', display);
         authorizationUrl.searchParams.append('state', state);
-        authorizationUrl.searchParams.append('code_challenge', await sha256(verifier));
+        authorizationUrl.searchParams.append('code_challenge', await sha256(verifier, 'url-safe-base64'));
         authorizationUrl.searchParams.append('code_challenge_method', 'S256');
 
         if (this._audience) {
