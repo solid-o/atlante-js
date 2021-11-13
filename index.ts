@@ -1,3 +1,7 @@
+/// <reference types="@jymfony/exceptions" />
+/// <reference types="@jymfony/contracts" />
+/// <reference types="@jymfony/util" />
+
 /// <reference path="lib/Exception/AbstractException.ts" />
 /// <reference path="lib/Exception/AccessDeniedException.ts" />
 /// <reference path="lib/Exception/BadRequestException.ts" />

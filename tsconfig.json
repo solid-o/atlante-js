@@ -7,14 +7,10 @@
     "noImplicitAny": false,
     "target": "ES2017",
     "typeRoots": [
-      "@types",
-      "./node_modules/@jymfony"
+      "@types"
     ],
     "types": [
-      "contracts",
-      "exceptions",
-      "node",
-      "util"
+      "node"
     ]
   },
   "exclude": [
