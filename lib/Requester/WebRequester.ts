@@ -37,7 +37,7 @@ class WebRequester extends implementationOf(Requester) implements RequesterInter
             }
         }
 
-        if (! contentTypeSet) {
+        if (! contentTypeSet && requestData) {
             xmlHttp.setRequestHeader('Content-Type', 'application/json');
         }
 

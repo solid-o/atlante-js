@@ -33,7 +33,7 @@ class AxiosRequester extends implementationOf(Requester) implements RequesterInt
             }
         }
 
-        if (! contentTypeSet) {
+        if (! contentTypeSet && requestData) {
             headers['Content-Type'] = 'application/json';
         }
 
