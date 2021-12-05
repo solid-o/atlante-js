@@ -16,18 +16,18 @@
   },
   "author": "Alessandro Chitolina <alekitto@gmail.com>",
   "dependencies": {
-    "@jymfony/contracts": "^0.1.0-alpha.28",
-    "@jymfony/exceptions": "^0.1.0-alpha.28",
-    "@jymfony/util": "^0.1.0-alpha.28"
+    "@jymfony/contracts": "^0.1.0-alpha.29",
+    "@jymfony/exceptions": "^0.1.0-alpha.29",
+    "@jymfony/util": "^0.1.0-alpha.29"
   },
   "devDependencies": {
-    "@jymfony/autoloader": "^0.1.0-alpha.28",
+    "@jymfony/autoloader": "^0.1.0-alpha.29",
     "@jymfony/compiler": "^0.2.10",
-    "@jymfony/datetime": "^0.1.0-alpha.28",
-    "@jymfony/debug": "^0.1.0-alpha.28",
-    "@jymfony/decorators": "^0.1.0-alpha.28",
-    "@jymfony/testing": "^0.1.0-alpha.28",
-    "@jymfony/var-dumper": "^0.1.0-alpha.28",
+    "@jymfony/datetime": "^0.1.0-alpha.29",
+    "@jymfony/debug": "^0.1.0-alpha.29",
+    "@jymfony/decorators": "^0.1.0-alpha.29",
+    "@jymfony/testing": "^0.1.0-alpha.29",
+    "@jymfony/var-dumper": "^0.1.0-alpha.29",
     "@types/chai": "^4.2.11",
     "@types/node": "^12.19.6",
     "@typescript-eslint/eslint-plugin": "^4.8.2",
