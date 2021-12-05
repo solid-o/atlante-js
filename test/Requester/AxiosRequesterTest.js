@@ -47,6 +47,20 @@ export default class AxiosRequesterTest extends TestCase {
             .shouldBeCalled()
             .willReturn(genericResponse());
 
+        await this._requester.request('POST', 'resource/subresource', {}, {test: 'foo'});
+    }
+
+    async testShouldNotSetContentTypeHeaderIfRequestIsEmpty() {
+        this._axios
+            .request(Argument.that(request =>
+                'application/json' === request.headers['Content-Type']
+            ))
+            .shouldNotBeCalled();
+
+        this._axios
+            .request(Argument.any())
+            .willReturn(genericResponse());
+
         await this._requester.request('GET', 'resource/subresource');
     }
 

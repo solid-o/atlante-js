@@ -1,4 +1,10 @@
-const _WEBPACK_REQUIRE_ = eval('require');
+const _WEBPACK_REQUIRE_ = (function () {
+    try {
+        return eval('require');
+    } catch (e) {
+        return undefined;
+    }
+}());
 const crypto = 'function' === typeof _WEBPACK_REQUIRE_ ? _WEBPACK_REQUIRE_('crypto') : undefined;
 
 const base64Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='

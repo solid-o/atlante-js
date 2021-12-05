@@ -49,6 +49,11 @@ export default class WebRequesterTest extends TestCase {
 
     async testShouldSetContentTypeHeaderIfNotSet() {
         this._xmlHttp.setRequestHeader('Content-Type', 'application/json').shouldBeCalled();
+        await this._requester.request('POST', 'resource/subresource', {}, {test: 'foo'});
+    }
+
+    async testShouldNotSetContentTypeHeaderIfRequestDataIsEmpty() {
+        this._xmlHttp.setRequestHeader('Content-Type', 'application/json').shouldNotBeCalled();
         await this._requester.request('GET', 'resource/subresource');
     }
 
