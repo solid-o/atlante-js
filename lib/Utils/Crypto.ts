@@ -8,38 +8,24 @@ const _WEBPACK_REQUIRE_ = (function () {
 const crypto = 'function' === typeof _WEBPACK_REQUIRE_ ? _WEBPACK_REQUIRE_('crypto') : undefined;
 
 const base64Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
-const urlSafeBase64Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_=';
+const urlSafeBase64Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_ ';
 
-export const base64Encode = (buf, b64 = base64Alphabet) => {
-    const encodeUTF8string = (str: string) => encodeURIComponent(str).replace(
-        /%([0-9A-F]{2})/g,
-        (match, p1) => String.fromCharCode(Number.parseInt(p1, 16))
-    );
-
-    if ('undefined' !== typeof window) {
-        if ('undefined' !== typeof window.btoa) {
-            return window.btoa(encodeUTF8string(buf))
-        }
-    } else {
-        return new Buffer(buf).toString('base64')
-    }
-
+export const base64Encode = (buf: Uint8Array, b64 = base64Alphabet): string => {
     let o1, o2, o3;
     let h1, h2, h3, h4;
     let bits;
     let i = 0, ac = 0, enc = '';
     const acc = []
 
-    if (! buf) {
-        return buf;
+    if (! buf.length) {
+        return '';
     }
 
-    buf = encodeUTF8string(buf)
     do {
         // Pack three octets into four hexets
-        o1 = buf.charCodeAt(i++);
-        o2 = buf.charCodeAt(i++);
-        o3 = buf.charCodeAt(i++);
+        o1 = buf[i++] ?? 0;
+        o2 = buf[i++] ?? 0;
+        o3 = buf[i++] ?? 0;
         bits = o1 << 16 | o2 << 8 | o3;
         h1 = bits >> 18 & 0x3f;
         h2 = bits >> 12 & 0x3f;
@@ -53,7 +39,7 @@ export const base64Encode = (buf, b64 = base64Alphabet) => {
     enc = acc.join('');
     const r = buf.length % 3;
 
-    return (r ? enc.slice(0, r - 3) : enc) + '==='.slice(r || 3);
+    return ((r ? enc.slice(0, r - 3) : enc) + b64[64].repeat(3).slice(r || 3)).trimEnd();
 };
 
 export const generateRandomString = (bytes = 16) => {

@@ -1,6 +1,6 @@
 import { @dataProvider } from '@jymfony/decorators';
 import { expect } from 'chai';
-import { sha256 } from '../../lib/Utils/Crypto';
+import {base64Encode, sha256} from '../../lib/Utils/Crypto';
 
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
 
@@ -18,5 +18,18 @@ export default class CryptoUtilTest extends TestCase {
     async testSha256Hash(expected, expectedBase64, vector) {
         expect(await sha256(vector, 'hex')).to.be.equal(expected);
         expect(await sha256(vector, 'base64')).to.be.equal(expectedBase64);
+    }
+
+    * provideBase64Vectors() {
+        yield [ 'xMmBRXLbfo+PMmTergXtnQJF5GwKPR5PEq6ue/ZG4tk=', Uint8Array.from([196, 201, 129, 69, 114, 219, 126, 143, 143, 50, 100, 222, 174, 5, 237, 157, 2, 69, 228, 108, 10, 61, 30, 79, 18, 174, 174, 123, 246, 70, 226, 217 ]) ];
+    }
+
+    @dataProvider('provideBase64Vectors')
+    testBase64Encoding(expected, vector) {
+        if (isString(vector)) {
+            vector = Uint8Array.from(vector);
+        }
+
+        expect(base64Encode(vector)).to.be.equal(expected);
     }
 }
