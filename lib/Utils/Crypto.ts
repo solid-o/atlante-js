@@ -10,6 +10,7 @@ const crypto = 'function' === typeof _WEBPACK_REQUIRE_ ? _WEBPACK_REQUIRE_('cryp
 const base64Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
 const urlSafeBase64Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_ ';
 
+export const urlSafeBase64Encode = (buf: Uint8Array): string => base64Encode(buf, urlSafeBase64Alphabet);
 export const base64Encode = (buf: Uint8Array, b64 = base64Alphabet): string => {
     let o1, o2, o3;
     let h1, h2, h3, h4;
@@ -57,7 +58,7 @@ export const generateRandomString = (bytes = 16) => {
         }
     }
 
-    return base64Encode(buf);
+    return urlSafeBase64Encode(buf);
 };
 
 export const buf2hex = (buffer: ArrayBuffer) => {

@@ -22,6 +22,7 @@ export default class CryptoUtilTest extends TestCase {
 
     * provideBase64Vectors() {
         yield [ 'xMmBRXLbfo+PMmTergXtnQJF5GwKPR5PEq6ue/ZG4tk=', Uint8Array.from([196, 201, 129, 69, 114, 219, 126, 143, 143, 50, 100, 222, 174, 5, 237, 157, 2, 69, 228, 108, 10, 61, 30, 79, 18, 174, 174, 123, 246, 70, 226, 217 ]) ];
+        yield [ 'Zm9vYmFy', (new TextEncoder()).encode("foobar") ];
     }
 
     @dataProvider('provideBase64Vectors')
