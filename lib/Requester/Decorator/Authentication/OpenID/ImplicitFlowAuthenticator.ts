@@ -52,7 +52,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
      *
      * @returns {Promise<void>}
      */
-    async authorize({ state, fragment = location.hash, query = location.search }: { state: any, fragment: string, query: string }): Promise<void> {
+    async authorize({ state = undefined, fragment = location.hash, query = location.search }): Promise<void> {
         const params = new URLSearchParams(fragment.replace(/^#/, ''));
         const queryParams = new URLSearchParams(query.replace(/^\?/, ''));
 

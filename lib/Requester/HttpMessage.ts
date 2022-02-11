@@ -1,6 +1,6 @@
 import Headers from './Headers';
 
 export default
-interface HttpMessage<T = any> {
+interface HttpMessage {
     readonly headers: Headers;
 }

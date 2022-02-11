@@ -64,6 +64,11 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
     abstract startAuthorization(options: AuthorizationOptions): Promise<never>;
 
     /**
+     * Authorize from browser state.
+     */
+    abstract authorize({ state, fragment, query, callbackUri }: Partial<{ state: any, fragment: string, query: string, callbackUri: string }>): Promise<void>;
+
+    /**
      * Get the current token information (using token introspection endpoint).
      */
     get tokenInfo(): Promise<any> {

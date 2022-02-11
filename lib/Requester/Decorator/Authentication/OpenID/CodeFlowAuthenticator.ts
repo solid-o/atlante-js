@@ -36,6 +36,33 @@ class CodeFlowAuthenticator extends BaseAuthenticator {
     }
 
     /**
+     * Finish code authorization flow.
+     *
+     * @returns {Promise<void>}
+     */
+    async authorize({ state = undefined, fragment = location.hash, query = location.search, callbackUri = location.href }): Promise<void> {
+        const params = new URLSearchParams(fragment.replace(/^#/, ''));
+        const queryParams = new URLSearchParams(query.replace(/^\?/, ''));
+
+        const error = params.get('error') || queryParams.get('error');
+        if (error) {
+            const errorDescription = params.get('error_description') || queryParams.get('error_description');
+            const errorHint = params.get('error_hint') || queryParams.get('error_hint');
+            const errorMessage = 'Error: ' + error +
+                (errorDescription ? '\nDescription: ' + decodeURIComponent(errorDescription) : '') +
+                (errorHint ? '\nHint: ' + decodeURIComponent(errorHint) : '');
+
+            throw new NoTokenAvailableException(undefined, errorMessage);
+        }
+
+        if (undefined !== state && params.get('state') !== state) {
+            throw new NoTokenAvailableException(undefined, 'Invalid state returned');
+        }
+
+        await this.authenticateFromCode(params.get('code') || queryParams.get('code'), callbackUri);
+    }
+
+    /**
      * Exchanges an authorization code with an access token.
      */
     async authenticateFromCode(code: string, callbackUri: string): Promise<void> {

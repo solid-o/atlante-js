@@ -46,6 +46,48 @@ class PkceCodeFlowAuthenticator extends BaseAuthenticator {
     }
 
     /**
+     * Finish PKCE code authorization flow.
+     *
+     * @returns {Promise<void>}
+     */
+    async authorize({ state = undefined, fragment = location.hash, query = location.search, callbackUri = location.href }): Promise<void> {
+        const params = new URLSearchParams(fragment.replace(/^#/, ''));
+        const queryParams = new URLSearchParams(query.replace(/^\?/, ''));
+
+        const data: Record<string, string> = { event: 'silent_auth_flow' };
+        for (const [ key, value ] of params.entries()) {
+            data[key] = value;
+        }
+
+        try {
+            const error = params.get('error') || queryParams.get('error');
+            if (error) {
+                const errorDescription = params.get('error_description') || queryParams.get('error_description');
+                const errorHint = params.get('error_hint') || queryParams.get('error_hint');
+                const errorMessage = 'Error: ' + error +
+                    (errorDescription ? '\nDescription: ' + decodeURIComponent(errorDescription) : '') +
+                    (errorHint ? '\nHint: ' + decodeURIComponent(errorHint) : '');
+
+                throw new NoTokenAvailableException(undefined, errorMessage);
+            }
+
+            if (undefined !== state && params.get('state') !== state) {
+                data.error = 'login_required';
+                throw new NoTokenAvailableException(undefined, 'Invalid state returned');
+            }
+
+            try {
+                await this.authenticateFromCode(params.get('code') || queryParams.get('code'), state, callbackUri);
+            } catch (e) {
+                data.error = data.error || e.message;
+                throw e;
+            }
+        } finally {
+            window.parent.postMessage(data, '*');
+        }
+    }
+
+    /**
      * Exchanges an authorization code with an access token.
      */
     async authenticateFromCode(code: string, state: string, callbackUri: string): Promise<void> {
@@ -82,21 +124,7 @@ class PkceCodeFlowAuthenticator extends BaseAuthenticator {
             return response.getData<TokenResponseDataInterface>().access_token;
         })();
 
-        const data: Record<string, string> = { event: 'silent_auth_flow' };
-        let error: Error | null = null;
-        try {
-            data.access_token = await (this._tokenPromise = this._authPromise);
-        } catch (e) {
-            error = e;
-            if (e instanceof NoTokenAvailableException) {
-                data.error = e.response?.getData<any>()?.error ?? e.message;
-            }
-        }
-
-        window.parent.postMessage(data, '*');
-        if (null !== error) {
-            throw error;
-        }
+        await (this._tokenPromise = this._authPromise);
     }
 
     async authenticateFromSession(callbackUri: string): Promise<void> {
@@ -158,9 +186,7 @@ class PkceCodeFlowAuthenticator extends BaseAuthenticator {
                 resolved = true;
                 removeFrame();
 
-                if ('login_required' === event.data.error) {
-                    resolve(null);
-                } else if (event.data.error) {
+                if (event.data.error) {
                     reject(new NoTokenAvailableException(undefined, 'Token request returned "' + event.data.error + '"'));
                 } else {
                     resolve();
