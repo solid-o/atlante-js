@@ -57,8 +57,8 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
         const queryParams = new URLSearchParams(query.replace(/^\?/, ''));
 
         const data: Record<string, string> = { event: 'implicit_flow_refresh' };
-        for (const [ key, value ] of params.entries()) {
-            data[key] = value;
+        for (const [ key, value ] of [ ...params.entries(), ...queryParams.entries() ]) {
+            data[key] = data[key] || value;
         }
 
         const error = params.get('error') || queryParams.get('error');

@@ -55,15 +55,15 @@ class PkceCodeFlowAuthenticator extends BaseAuthenticator {
         const queryParams = new URLSearchParams(query.replace(/^\?/, ''));
 
         const data: Record<string, string> = { event: 'silent_auth_flow' };
-        for (const [ key, value ] of params.entries()) {
-            data[key] = value;
+        for (const [ key, value ] of [ ...params.entries(), ...queryParams.entries() ]) {
+            data[key] = data[key] || value;
         }
 
         try {
-            const error = params.get('error') || queryParams.get('error');
+            const error = data.error;
             if (error) {
-                const errorDescription = params.get('error_description') || queryParams.get('error_description');
-                const errorHint = params.get('error_hint') || queryParams.get('error_hint');
+                const errorDescription = data.error_description;
+                const errorHint = data.error_hint;
                 const errorMessage = 'Error: ' + error +
                     (errorDescription ? '\nDescription: ' + decodeURIComponent(errorDescription) : '') +
                     (errorHint ? '\nHint: ' + decodeURIComponent(errorHint) : '');
@@ -71,13 +71,13 @@ class PkceCodeFlowAuthenticator extends BaseAuthenticator {
                 throw new NoTokenAvailableException(undefined, errorMessage);
             }
 
-            if (undefined !== state && params.get('state') !== state) {
+            if (undefined !== state && data.state !== state) {
                 data.error = 'login_required';
                 throw new NoTokenAvailableException(undefined, 'Invalid state returned');
             }
 
             try {
-                await this.authenticateFromCode(params.get('code') || queryParams.get('code'), state, callbackUri);
+                await this.authenticateFromCode(data.code, state, callbackUri);
             } catch (e) {
                 data.error = data.error || e.message;
                 throw e;
@@ -196,18 +196,22 @@ class PkceCodeFlowAuthenticator extends BaseAuthenticator {
             document.body.appendChild(frame);
         });
 
-        return Promise.race([
-            responsePromise,
-            new Promise<void>((resolve, reject) => {
-                setTimeout(() => {
-                    if (resolved) {
-                        return;
-                    }
+        try {
+            await Promise.race([
+                responsePromise,
+                new Promise<void>((resolve, reject) => {
+                    setTimeout(() => {
+                        if (resolved) {
+                            return;
+                        }
 
-                    removeFrame();
-                    reject(new NoTokenAvailableException(undefined, 'Operation timed out'));
-                }, 30000);
-            }),
-        ]);
+                        removeFrame();
+                        reject(new NoTokenAvailableException(undefined, 'Operation timed out'));
+                    }, 30000);
+                }),
+            ]);
+        } finally {
+            await this._tokenStorage.deleteItem('pkce_verifier_' + state);
+        }
     }
 }
