@@ -1,4 +1,4 @@
-import BaseAuthenticator, { AuthFlowDisplay, OpenidAuthenticatorConfiguration } from './BaseAuthenticator';
+import BaseAuthenticator, { AuthorizationOptions, OpenidAuthenticatorConfiguration } from './BaseAuthenticator';
 import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
 import { RequesterInterface } from '../../../RequesterInterface';
 import { StorageInterface } from '../../../../Storage/StorageInterface';
@@ -19,7 +19,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
     /**
      * @inheritdoc
      */
-    async startAuthorization(callbackUri: string, display: AuthFlowDisplay, state: string): Promise<never> {
+    async startAuthorization({ callbackUri, state, display, prompt }: AuthorizationOptions): Promise<never> {
         const configuration = await this._openidConfiguration;
 
         // Generate a random state if none is passed.
@@ -27,7 +27,7 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
 
         const authorizationUrl = new URL(configuration.authorizationEndpoint);
         authorizationUrl.searchParams.append('response_type', 'token id_token');
-        authorizationUrl.searchParams.append('prompt', 'login consent');
+        authorizationUrl.searchParams.append('prompt', prompt ? prompt : 'login consent');
         authorizationUrl.searchParams.append('scope', this._scopes);
         authorizationUrl.searchParams.append('client_id', this._clientId);
         authorizationUrl.searchParams.append('client_secret', this._clientSecret);

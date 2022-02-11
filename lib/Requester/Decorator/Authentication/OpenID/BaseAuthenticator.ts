@@ -23,6 +23,13 @@ export enum AuthFlowDisplay {
     TOUCH = 'touch',
 }
 
+export interface AuthorizationOptions {
+    callbackUri: string;
+    display?: AuthFlowDisplay;
+    state?: string;
+    prompt?: string;
+}
+
 export default abstract class BaseAuthenticator extends TokenPasswordAuthenticator {
     protected readonly _scopes: string;
     protected readonly _audience: string;
@@ -54,7 +61,7 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
     /**
      * Starts the authorization flow (code or implicit).
      */
-    abstract startAuthorization(callbackUri: string, display?: AuthFlowDisplay, state?: string): Promise<never>;
+    abstract startAuthorization(options: AuthorizationOptions): Promise<never>;
 
     /**
      * Get the current token information (using token introspection endpoint).
@@ -83,6 +90,15 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
             const idItem = await this._tokenStorage.getItem(this._idTokenKey);
             if (idItem.isHit) {
                 endSessionUrl.searchParams.append('id_token_hint', idItem.get());
+            } else {
+                await super.logout();
+                if (this._postLogoutRedirectUri) {
+                    window.location.href = this._postLogoutRedirectUri;
+                } else {
+                    window.location.reload();
+                }
+
+                return;
             }
         }
 

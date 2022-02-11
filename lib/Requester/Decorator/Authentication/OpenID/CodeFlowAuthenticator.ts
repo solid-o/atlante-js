@@ -1,4 +1,4 @@
-import BaseAuthenticator, { AuthFlowDisplay } from './BaseAuthenticator';
+import BaseAuthenticator, { AuthorizationOptions } from './BaseAuthenticator';
 import InvalidResponse from '../../../Response/InvalidResponse';
 import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
 import { TokenResponseDataInterface } from '../OAuth/TokenResponseDataInterface';
@@ -10,7 +10,7 @@ class CodeFlowAuthenticator extends BaseAuthenticator {
     /**
      * @inheritdoc
      */
-    async startAuthorization(callbackUri: string, display: AuthFlowDisplay = AuthFlowDisplay.PAGE, state?: string): Promise<never> {
+    async startAuthorization({ callbackUri, state, display, prompt }: AuthorizationOptions): Promise<never> {
         const configuration = await this._openidConfiguration;
 
         // Generate a random state if none is passed.
@@ -18,7 +18,7 @@ class CodeFlowAuthenticator extends BaseAuthenticator {
 
         const authorizationUrl = new URL(configuration.authorizationEndpoint);
         authorizationUrl.searchParams.append('response_type', 'code');
-        authorizationUrl.searchParams.append('prompt', 'login consent');
+        authorizationUrl.searchParams.append('prompt', prompt ? prompt : 'login consent');
         authorizationUrl.searchParams.append('scope', this._scopes);
         authorizationUrl.searchParams.append('client_id', this._clientId);
         authorizationUrl.searchParams.append('client_secret', this._clientSecret);
