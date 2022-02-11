@@ -11,7 +11,7 @@ export default class BadResponse extends InvalidResponse {
         try {
             errors = BadResponsePropertyTree.parse(data);
         } catch (e) {
-            if (! (e instanceof InvalidArgumentException)) {
+            if (! (e instanceof globalThis.InvalidArgumentException)) {
                 throw e;
             }
         }

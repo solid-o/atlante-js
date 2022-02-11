@@ -10,34 +10,34 @@ export default class BadResponsePropertyTree {
         const obj = new BadResponsePropertyTree();
 
         if (isString(content)) {
-            throw new InvalidArgumentException('Unexpected response type, object or array expected, string given');
+            throw new globalThis.InvalidArgumentException('Unexpected response type, object or array expected, string given');
         }
 
         const errors = content.errors ?? null;
         if (null === errors) {
-            throw new InvalidArgumentException('Unable to parse missing `errors` property');
+            throw new globalThis.InvalidArgumentException('Unable to parse missing `errors` property');
         }
 
         if (! Array.isArray(errors)) {
-            throw new InvalidArgumentException(`Invalid \`errors\` property type, expected array, ${typeof errors} given`);
+            throw new globalThis.InvalidArgumentException(`Invalid \`errors\` property type, expected array, ${typeof errors} given`);
         }
 
         obj.errors = errors;
 
         const name = content.name ?? null;
         if (null === name) {
-            throw new InvalidArgumentException('Missing `name` property');
+            throw new globalThis.InvalidArgumentException('Missing `name` property');
         }
 
         if (! isString(name)) {
-            throw new InvalidArgumentException(`Invalid \`name\` property type, expected string, ${typeof name} given`);
+            throw new globalThis.InvalidArgumentException(`Invalid \`name\` property type, expected string, ${typeof name} given`);
         }
 
         obj.name = name;
 
         const children = content.children ?? [];
         if (! Array.isArray(children)) {
-            throw new InvalidArgumentException(`Invalid \`children\` property type, expected array, ${typeof children} given`);
+            throw new globalThis.InvalidArgumentException(`Invalid \`children\` property type, expected array, ${typeof children} given`);
         }
 
         obj.children = children.map(BadResponsePropertyTree.parse);

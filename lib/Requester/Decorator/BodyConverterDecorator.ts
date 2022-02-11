@@ -56,7 +56,7 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
             encodeParams(body);
             body = (new URLSearchParams(p)).toString();
         } else {
-            throw new UnexpectedValueException(`Unable to convert Request content body: expected "application/json", "application/x-www-form-urlencoded", "application/merge-patch+json" or "application/merge-patch+x-www-form-urlencoded" \`content-type\` header, "${contentType}" given`);
+            throw new globalThis.UnexpectedValueException(`Unable to convert Request content body: expected "application/json", "application/x-www-form-urlencoded", "application/merge-patch+json" or "application/merge-patch+x-www-form-urlencoded" \`content-type\` header, "${contentType}" given`);
         }
 
         return body;
@@ -91,6 +91,6 @@ class BodyConverterDecorator extends implementationOf(Decorator) implements Deco
             return iterated;
         }
 
-        throw new InvalidArgumentException('Argument #1 passed to BodyConverterDecorator._prepare has to be null, string, number, boolean, Date, Blob, iterable or function, "' + typeof body + '" given');
+        throw new globalThis.InvalidArgumentException('Argument #1 passed to BodyConverterDecorator._prepare has to be null, string, number, boolean, Date, Blob, iterable or function, "' + typeof body + '" given');
     }
 }
