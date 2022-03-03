@@ -16,7 +16,7 @@ export const base64Encode = (buf: Uint8Array, b64 = base64Alphabet): string => {
     let h1, h2, h3, h4;
     let bits;
     let i = 0, ac = 0, enc = '';
-    const acc = []
+    const acc = [];
 
     if (! buf.length) {
         return '';
