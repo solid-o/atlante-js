@@ -1,6 +1,7 @@
 import ServerConfiguration, { ServerConfigurationProps } from './ServerConfiguration';
 import Headers from '../../../Headers';
 import HttpBasicAuthenticator from '../HttpBasicAuthenticator';
+import InvalidRequestException from '../../../../Exception/InvalidRequestException';
 import InvalidResponse from '../../../Response/InvalidResponse';
 import { RequesterInterface } from '../../../RequesterInterface';
 import { StorageInterface } from '../../../../Storage/StorageInterface';
@@ -172,7 +173,7 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
         });
 
         if (response instanceof InvalidResponse) {
-            throw new Error('Bad response');
+            throw new InvalidRequestException(response);
         }
 
         return response.getData<any>();
