@@ -10,3 +10,4 @@ package-lock.json
 test/
 tests.js
 .github/
+stubs/
