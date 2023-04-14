@@ -1,3 +1,11 @@
+import '@jymfony/util/lib/global-this.js';
+globalThis.__jymfony = globalThis.__jymfony || {};
+
+import '@jymfony/exceptions';
+import '@jymfony/util/lib/mixins.js';
+import '@jymfony/util/lib/is.js';
+import '@jymfony/util/lib/Platform.js';
+
 import Interface, { ClientInterface } from './ClientInterface';
 import AccessDeniedException from '../Exception/AccessDeniedException';
 import AccessDeniedResponse from '../Requester/Response/AccessDeniedResponse';

@@ -13,7 +13,7 @@
     "coverage-html": "nyc --reporter=html npm test",
     "lint": "eslint lib/",
     "lint-fix": "eslint --fix lib/",
-    "test": "node ./tests.js"
+    "test": "node ./tests.cjs"
   },
   "author": "Alessandro Chitolina <alekitto@gmail.com>",
   "dependencies": {
