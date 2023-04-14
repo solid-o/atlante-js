@@ -1,4 +1,5 @@
 import '@jymfony/util/lib/global-this.js';
+// @ts-ignore
 globalThis.__jymfony = globalThis.__jymfony || {};
 
 import '@jymfony/exceptions';
