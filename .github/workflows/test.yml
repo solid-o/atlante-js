@@ -10,14 +10,15 @@ jobs:
                     - '12'
                     - '14'
                     - '16'
-                    - '17'
+                    - '18'
+                    - '19'
 
         name: Node.JS ${{ matrix.node_version }}
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v3
 
             - name: Setup Node.JS ${{ matrix.node_version }}
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v3
               with:
                   node-version: ${{ matrix.node_version }}
 
@@ -28,6 +29,6 @@ jobs:
               if: matrix.node_version == '14'
 
             - name: Upload coverage to Codecov
-              uses: codecov/codecov-action@v1
+              uses: codecov/codecov-action@v3
               with:
                   file: ./coverage/clover.xml
