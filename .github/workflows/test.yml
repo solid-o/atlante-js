@@ -12,6 +12,7 @@ jobs:
                     - '16'
                     - '18'
                     - '19'
+                    - '20'
 
         name: Node.JS ${{ matrix.node_version }}
         steps:
@@ -23,10 +24,12 @@ jobs:
                   node-version: ${{ matrix.node_version }}
 
             - run: npm install
+            - run: npm install @jymfony/compiler
+              if: ${{ matrix.node_version < 16 }}
             - run: npm test
-              if: matrix.node_version != '14'
+              if: matrix.node_version != '18'
             - run: npm run-script coverage
-              if: matrix.node_version == '14'
+              if: matrix.node_version == '18'
 
             - name: Upload coverage to Codecov
               uses: codecov/codecov-action@v3

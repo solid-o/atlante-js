@@ -14,7 +14,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '16.x'
+        node-version: '18.x'
     - run: npm install
     - run: touch node_modules/@jymfony/decorators/index.d.ts # Bug: "error TS2688: Cannot find type definition file for 'decorators'."
     - run: npm test
