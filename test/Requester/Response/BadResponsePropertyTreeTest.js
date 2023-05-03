@@ -1,6 +1,3 @@
-import { @dataProvider } from '@jymfony/decorators';
-import { expect } from 'chai';
-
 const BadResponsePropertyTree = Solido.Atlante.Requester.Response.BadResponsePropertyTree;
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
 
@@ -8,32 +5,32 @@ export default class BadResponsePropertyTreeTest extends TestCase {
     @dataProvider('provideParseCases')
     testParse(content) {
         const parsed = BadResponsePropertyTree.parse(content);
-        expect(parsed).to.be.instanceOf(BadResponsePropertyTree);
-        expect(parsed.getName()).to.be.equal('');
-        expect(parsed.getErrors()).to.have.length(0);
+        __self.assertInstanceOf(BadResponsePropertyTree, parsed);
+        __self.assertEquals('', parsed.getName());
+        __self.assertCount(0, parsed.getErrors());
 
         const children = parsed.getChildren();
-        expect(children).to.have.length(2);
+        __self.assertCount(2, children);
         for (const child of children) {
-            expect(child).to.be.instanceOf(BadResponsePropertyTree);
+            __self.assertInstanceOf(BadResponsePropertyTree, child);
         }
 
-        expect(children[0].getName()).to.be.equal('foo');
-        expect(children[0].getErrors()).to.be.deep.equal(['Required.']);
-        expect(children[0].getChildren()).to.have.length(0);
+        __self.assertEquals('foo', children[0].getName());
+        __self.assertEquals([ 'Required.' ], children[0].getErrors());
+        __self.assertCount(0, children[0].getChildren());
 
-        expect(children[1].getName()).to.be.equal('bar');
-        expect(children[1].getErrors()).to.have.length(0);
+        __self.assertEquals('bar', children[1].getName());
+        __self.assertCount(0, children[1].getErrors());
 
         const subchildren = children[1].getChildren();
-        expect(subchildren).to.have.length(1);
+        __self.assertCount(1, subchildren);
         for (const child of subchildren) {
-            expect(child).to.be.instanceOf(BadResponsePropertyTree);
+            __self.assertInstanceOf(BadResponsePropertyTree, child);
         }
 
-        expect(subchildren[0].getName()).to.be.equal('baz');
-        expect(subchildren[0].getErrors()).to.be.deep.equal(['Bazbar']);
-        expect(subchildren[0].getChildren()).to.have.length(0);
+        __self.assertEquals('baz', subchildren[0].getName());
+        __self.assertEquals([ 'Bazbar' ], subchildren[0].getErrors());
+        __self.assertCount(0, subchildren[0].getChildren());
     }
 
     * provideParseCases() {
@@ -64,7 +61,7 @@ export default class BadResponsePropertyTreeTest extends TestCase {
     @dataProvider('provideBadCases')
     testBadCases(content, exceptionClass, message = null) {
         this.expectException(exceptionClass);
-        if (message !== null) {
+        if (null !== message) {
             this.expectExceptionMessage(message);
         }
 
@@ -74,10 +71,10 @@ export default class BadResponsePropertyTreeTest extends TestCase {
     * provideBadCases() {
         yield [ 'foobar', InvalidArgumentException, 'Unexpected response type, object or array expected, string given' ];
         yield [ { name: 'foobar' }, InvalidArgumentException, 'Unable to parse missing `errors` property' ];
-        yield [ { errors: ['foobar'] }, InvalidArgumentException, 'Missing `name` property' ];
-        yield [ { name: ['foo'], errors: ['foobar'] }, InvalidArgumentException, 'Invalid `name` property type, expected string, object given' ];
+        yield [ { errors: [ 'foobar' ] }, InvalidArgumentException, 'Missing `name` property' ];
+        yield [ { name: [ 'foo' ], errors: [ 'foobar' ] }, InvalidArgumentException, 'Invalid `name` property type, expected string, object given' ];
         yield [ { errors: 'foo', name: 'foobar' }, InvalidArgumentException, 'Invalid `errors` property type, expected array, string given' ];
         yield [ { name: 'foobar', errors: [], children: 'foobar' }, InvalidArgumentException, 'Invalid `children` property type, expected array, string given' ];
-        yield [ { name: 'foobar', errors: [], children: ['foobar'] }, InvalidArgumentException, 'Unexpected response type, object or array expected, string given' ];
+        yield [ { name: 'foobar', errors: [], children: [ 'foobar' ] }, InvalidArgumentException, 'Unexpected response type, object or array expected, string given' ];
     }
 }

@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 const Headers = Solido.Atlante.Requester.Headers;
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
 
@@ -9,7 +7,7 @@ export default class HeadersTest extends TestCase {
         h.add('Content-Type', 'foo/bar');
         h.set('Content-Type', 'bar/baz');
 
-        expect(h.get('Content-Type')).to.be.eq('bar/baz');
+        __self.assertEquals('bar/baz', h.get('Content-Type'));
     }
 
     testAddShouldNotOverwriteExistingHeader() {
@@ -17,7 +15,7 @@ export default class HeadersTest extends TestCase {
         h.add('Content-Type', 'foo/bar');
         h.add('Content-Type', 'bar/baz');
 
-        expect(h.get('Content-Type')).to.be.deep.eq([ 'foo/bar', 'bar/baz' ]);
+        __self.assertEquals([ 'foo/bar', 'bar/baz' ], h.get('Content-Type'));
     }
 
     testHeaderNamesShouldBeNormalized() {
@@ -25,8 +23,8 @@ export default class HeadersTest extends TestCase {
         h.add('Content-Type', 'foo/bar');
         h.add('CONTENT-TYPE', 'bar/baz');
 
-        expect(h.has('CoNtEnT-TyPe')).to.be.true;
-        expect(h.get('content-type')).to.be.deep.eq([ 'foo/bar', 'bar/baz' ]);
+        __self.assertTrue(h.has('CoNtEnT-TyPe'));
+        __self.assertEquals([ 'foo/bar', 'bar/baz' ], h.get('content-type'));
     }
 
     testRemoveShouldUnsetAllTheHeadersWithTheGivenName() {
@@ -35,12 +33,12 @@ export default class HeadersTest extends TestCase {
         h.add('Content-Type', 'bar/baz');
 
         h.remove('content-type');
-        expect(h.has('content-type')).to.be.false;
+        __self.assertFalse(h.has('content-type'));
     }
 
     testGetShouldReturnUndefinedIfHeaderIsNotPresent() {
         const h = new Headers();
-        expect(h.get('Content-Type')).to.be.undefined;
+        __self.assertUndefined(h.get('Content-Type'));
     }
 
     testGetShouldReturnTheHeaderValue() {
@@ -49,13 +47,13 @@ export default class HeadersTest extends TestCase {
         h.add('Content-Type', 'bar/baz');
         h.add('Content-Type', 'baz/baz');
 
-        expect(h.get('content-type')).to.be.deep.eq([ 'foo/bar', 'bar/baz', 'baz/baz' ]);
+        __self.assertEquals([ 'foo/bar', 'bar/baz', 'baz/baz' ], h.get('content-type'));
     }
 
     testGetShouldReturnAllTheHeaderValues() {
         const h = new Headers();
         h.add('Content-Type', 'foo/bar');
 
-        expect(h.get('content-type')).to.be.eq('foo/bar');
+        __self.assertEquals('foo/bar', h.get('content-type'));
     }
 }

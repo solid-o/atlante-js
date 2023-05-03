@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 const ClientTokenAuthenticator = Solido.Atlante.Requester.Decorator.Authentication.OAuth.ClientTokenAuthenticator;
 const Headers = Solido.Atlante.Requester.Headers;
 const InMemoryStorage = Solido.Atlante.Storage.InMemoryStorage;
@@ -8,6 +6,7 @@ const Response = Solido.Atlante.Requester.Response.Response;
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
 
 const TOKEN_ENDPOINT = 'http://localhost/oauth2/token';
+
 export default class ClientTokenAuthenticatorTest extends TestCase {
     _requester;
     _storage;
@@ -34,13 +33,13 @@ export default class ClientTokenAuthenticatorTest extends TestCase {
             .shouldBeCalled()
         ;
 
-        expect(await this._authenticator.token).to.be.equal('foo_token');
+        __self.assertEquals('foo_token', await this._authenticator.token);
 
         let item = await this._storage.getItem('client_access_token');
-        expect(item.isHit).to.be.equal(true);
-        expect(item.get()).to.be.equal('foo_token');
+        __self.assertTrue(item.isHit);
+        __self.assertEquals('foo_token', item.get());
 
         item = await this._storage.getItem('refresh_token');
-        expect(item.isHit).to.be.equal(false);
+        __self.assertFalse(item.isHit);
     }
 }

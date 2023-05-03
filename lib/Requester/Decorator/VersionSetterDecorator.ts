@@ -1,6 +1,7 @@
 import Decorator, { DecoratorInterface } from './DecoratorInterface';
 import Accept from '../Header/Accept';
 import Request from '../Request';
+import Headers from "../Headers";
 
 export default
 class VersionSetterDecorator extends implementationOf(Decorator) implements DecoratorInterface {
@@ -18,8 +19,9 @@ class VersionSetterDecorator extends implementationOf(Decorator) implements Deco
      * Decorates the request.
      */
     decorate(request: Request<any>): Request<any> {
-        const { body = undefined, method, url, headers } = request;
+        const { body = undefined, method, url, headers: oldHeaders } = request;
 
+        const headers = new Headers(oldHeaders.all);
         const header = headers.get('Accept') ?? new Accept('application/json');
         header.setParameter('version', this._version);
         headers.set('Accept', header);

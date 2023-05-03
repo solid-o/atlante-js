@@ -1,12 +1,13 @@
-import { AdapterTestCase } from './AdapterTestCase';
-import { LocalStorage } from 'node-localstorage';
-import { tmpdir } from 'os';
+import Storage from 'dom-storage';
 
+const AdapterTestCase = Solido.Atlante.Tests.Storage.AdapterTestCase;
 const WebLocalStorage = Solido.Atlante.Storage.WebLocalStorage;
 
-export default class WebLocalStorageTest extends AdapterTestCase {
+export default
+@timeSensitive()
+class WebLocalStorageTest extends AdapterTestCase {
     before() {
-        global.localStorage = new LocalStorage(tmpdir() + '/scratch');
+        global.localStorage = new Storage(null, { strict: true });
     }
 
     async testBasicUsageWithLongKeys() {

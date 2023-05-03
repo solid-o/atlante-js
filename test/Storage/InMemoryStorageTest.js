@@ -1,7 +1,9 @@
-import { AdapterTestCase } from './AdapterTestCase';
+const AdapterTestCase = Solido.Atlante.Tests.Storage.AdapterTestCase;
 const InMemoryStorage = Solido.Atlante.Storage.InMemoryStorage;
 
-export default class InMemoryStorageTest extends AdapterTestCase {
+export default
+@timeSensitive()
+class InMemoryStorageTest extends AdapterTestCase {
     async testBasicUsageWithLongKeys() {
         this.markTestSkipped();
     }

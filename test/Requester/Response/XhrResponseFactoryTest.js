@@ -1,6 +1,3 @@
-import { @dataProvider } from '@jymfony/decorators';
-import { expect } from 'chai';
-
 const BadResponse = Solido.Atlante.Requester.Response.BadResponse;
 const BadResponsePropertyTree = Solido.Atlante.Requester.Response.BadResponsePropertyTree;
 const InvalidResponse = Solido.Atlante.Requester.Response.InvalidResponse;
@@ -14,9 +11,9 @@ export default class XhrResponseFactoryTest extends TestCase {
         const factory = new XhrResponseFactory();
         const response = factory.fromResponse(requesterResponse);
 
-        expect(response).to.be.instanceof(responseClass);
-        expect(response.getStatusCode()).to.be.equal(statusCode);
-        expect(response.getData()).to.be.deep.equal(expectedData);
+        __self.assertInstanceOf(responseClass, response);
+        __self.assertEquals(statusCode, response.getStatusCode());
+        __self.assertEquals(expectedData, response.getData());
     }
 
     * provideParseCases() {

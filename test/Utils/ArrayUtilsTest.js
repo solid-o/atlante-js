@@ -1,6 +1,3 @@
-import { @dataProvider } from '@jymfony/decorators';
-import { expect } from 'chai';
-
 const ArrayUtils = Solido.Atlante.Utils.ArrayUtils;
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
 
@@ -24,23 +21,23 @@ export default class ArrayUtilsTest extends TestCase {
                 { fooBarBaz: 'barbar', fooBarBAR: 'baz' },
             ],
         }, {
+            snake_key: 'foobar',
+            camelCase: 'barbar',
+            foo_barBaz: 'baz',
+            foo_barBAR: 'baz',
+            foo_bar_123: 'baz',
+            nested_object: {
                 snake_key: 'foobar',
                 camelCase: 'barbar',
                 foo_barBaz: 'baz',
                 foo_barBAR: 'baz',
                 foo_bar_123: 'baz',
-                nested_object: {
-                    snake_key: 'foobar',
-                    camelCase: 'barbar',
-                    foo_barBaz: 'baz',
-                    foo_barBAR: 'baz',
-                    foo_bar_123: 'baz',
-                },
-                nested_array: [
-                    { snake_key: 'camel' },
-                    { foo_BarBaz: 'barbar', foo_barBAR: 'baz' },
-                ],
-            }
+            },
+            nested_array: [
+                { snake_key: 'camel' },
+                { foo_BarBaz: 'barbar', foo_barBAR: 'baz' },
+            ],
+        },
         ];
 
         yield [ [
@@ -72,7 +69,7 @@ export default class ArrayUtilsTest extends TestCase {
 
     @dataProvider('provideSnakeCaseData')
     testToCamelCaseKeysShouldConvertKeysRecursively(expected, original) {
-        expect(ArrayUtils.toCamelCaseKeys(original)).to.be.deep.equal(expected);
+        __self.assertEquals(expected, ArrayUtils.toCamelCaseKeys(original));
     }
 
     * provideCamelCaseData() {
@@ -141,7 +138,7 @@ export default class ArrayUtilsTest extends TestCase {
 
     @dataProvider('provideCamelCaseData')
     testToSnakeCaseKeysShouldConvertKeysRecursively(expected, original) {
-        expect(ArrayUtils.toSnakeCaseKeys(original)).to.be.deep.equal(expected);
+        __self.assertEquals(expected, ArrayUtils.toSnakeCaseKeys(original));
     }
 
     testKsortShouldWorkCorrectly() {
@@ -153,33 +150,33 @@ export default class ArrayUtilsTest extends TestCase {
             à: 'w',
         };
 
-        expect(ArrayUtils.ksort(o)).to.be.deep.eq({
+        __self.assertEquals({
             à: 'w',
             è: 's',
             f: 'd',
             k: 'c',
             x: 'a',
-        });
+        }, ArrayUtils.ksort(o));
     }
 
     testComputePatchObjectShouldWorkCorrectly() {
         const o1 = { foo: 'bar', bar: 'bar', baz: 'baz', undef: null };
         const o2 = { foo: 'baz', bar: 'bar', baz: undefined, undef: undefined };
 
-        expect(ArrayUtils.computePatchObject(o1, o2)).to.be.deep.eq({ foo: 'baz', baz: null });
+        __self.assertEquals({ foo: 'baz', baz: null }, ArrayUtils.computePatchObject(o1, o2));
     }
 
     testComputePatchObjectShouldHandleNestedObjects() {
         const o1 = { foo: [ 'bar', 'baz' ], bar: { baz: 'baz', baz2: 'bazbaz' } };
         const o2 = { foo: [ 'baz', 'bar' ], bar: { baz: 'baz', baz1: 'baz2' } };
 
-        expect(ArrayUtils.computePatchObject(o1, o2)).to.be.deep.eq({ foo: [ 'baz', 'bar' ], bar: { baz: 'baz', baz1: 'baz2' } });
+        __self.assertEquals({ foo: [ 'baz', 'bar' ], bar: { baz: 'baz', baz1: 'baz2' } }, ArrayUtils.computePatchObject(o1, o2));
     }
 
     testComputePatchObjectShouldHandleDates() {
         const o1 = { foo: new Date('2019-09-25T00:00:00Z'), bar: new Date('2019-09-25T00:00:00Z') };
         const o2 = { foo: new Date('2019-09-25T00:00:00Z'), bar: new Date('2019-09-20T00:00:00Z') };
 
-        expect(ArrayUtils.computePatchObject(o1, o2)).to.be.deep.eq({ bar: '2019-09-20T00:00:00.000Z' });
+        __self.assertEquals({ bar: '2019-09-20T00:00:00.000Z' }, ArrayUtils.computePatchObject(o1, o2));
     }
 }

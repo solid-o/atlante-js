@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 const BadResponse = Solido.Atlante.Requester.Response.BadResponse;
 const BadResponsePropertyTree = Solido.Atlante.Requester.Response.BadResponsePropertyTree;
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
@@ -12,10 +10,10 @@ export default class BadResponseTest extends TestCase {
             children: [],
         });
 
-        expect(response.getStatusCode()).to.be.equal(400);
+        __self.assertEquals(400, response.getStatusCode());
 
         const errors = response.getErrors();
-        expect(errors).to.be.instanceOf(BadResponsePropertyTree);
+        __self.assertInstanceOf(BadResponsePropertyTree, errors);
     }
 
     testShouldNotThrowIfObjectIsNotAnErrorPropertyTree() {
@@ -23,10 +21,10 @@ export default class BadResponseTest extends TestCase {
             error: 'invalid_request',
         });
 
-        expect(response.getStatusCode()).to.be.equal(400);
-        expect(response.getErrors()).to.be.equal(null);
-        expect(response.getData()).to.be.deep.equal({
+        __self.assertEquals(400, response.getStatusCode());
+        __self.assertEquals(null, response.getErrors());
+        __self.assertEquals({
             error: 'invalid_request',
-        });
+        }, response.getData());
     }
 }

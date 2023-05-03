@@ -1,5 +1,4 @@
 import { createRequest } from '../../lib/Requester/Request';
-import { expect } from 'chai';
 
 const Argument = Jymfony.Component.Testing.Argument.Argument;
 const BodyConverterDecorator = Solido.Atlante.Requester.Decorator.BodyConverterDecorator;
@@ -8,23 +7,15 @@ const WebRequester = Solido.Atlante.Requester.WebRequester;
 const XMLHttpRequest = Solido.Atlante.Stubs.XmlHttpRequest;
 
 export default class WebRequesterTest extends TestCase {
-    __construct() {
-        super.__construct();
+    /**
+     * @type {Jymfony.Component.Testing.Prophecy.ObjectProphecy|Solido.Atlante.Stubs.XMLHttpRequest}
+     */
+    _xmlHttp;
 
-        /**
-         * @type {Jymfony.Component.Testing.Prophecy.ObjectProphecy|Solido.Atlante.Stubs.XMLHttpRequest}
-         *
-         * @private
-         */
-        this._xmlHttp = undefined;
-
-        /**
-         * @type {Solido.Atlante.Requester.WebRequester}
-         *
-         * @private
-         */
-        this._requester = undefined;
-    }
+    /**
+     * @type {Solido.Atlante.Requester.WebRequester}
+     */
+    _requester;
 
     beforeEach() {
         const xmlHttp = this._xmlHttp = this.prophesize(XMLHttpRequest);
@@ -69,8 +60,8 @@ export default class WebRequesterTest extends TestCase {
             .willReturn('Content-Type: application/octet-stream\r\nDate: 12 Jan 2019 02:00:00 GMT\r\n');
 
         const response = await this._requester.request('GET', 'resource/subresource');
-        expect(response.getHeaders().get('Content-Type')).to.be.eq('application/octet-stream');
-        expect(response.getHeaders().get('Date')).to.be.eq('12 Jan 2019 02:00:00 GMT');
+        __self.assertEquals('application/octet-stream', response.getHeaders().get('Content-Type'));
+        __self.assertEquals('12 Jan 2019 02:00:00 GMT', response.getHeaders().get('Date'));
     }
 
     async testShouldReportStatusCodeCorrectly() {
@@ -83,7 +74,7 @@ export default class WebRequesterTest extends TestCase {
         });
 
         const response = await this._requester.request('GET', 'resource/subresource');
-        expect(response.getStatusCode()).to.be.eq(418);
+        __self.assertEquals(418, response.getStatusCode());
     }
 
     async testShouldWorkWithBodyConverterDecorator() {

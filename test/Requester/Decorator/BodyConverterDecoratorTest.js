@@ -1,6 +1,4 @@
-import { @dataProvider } from '@jymfony/decorators';
 import { createRequest } from '../../../lib/Requester/Request';
-import { expect } from 'chai';
 
 const BodyConverterDecorator = Solido.Atlante.Requester.Decorator.BodyConverterDecorator;
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
@@ -11,8 +9,8 @@ export default class BodyConverterDecoratorTest extends TestCase {
         const request = createRequest('GET', '/foo', null, 'foo');
         const decorated = decorator.decorate(request);
 
-        expect(decorated).to.be.deep.equal(request);
-        expect(decorated).to.be.not.equal(request);
+        __self.assertEquals(request, decorated);
+        __self.assertFalse(request === decorated);
     }
 
     @dataProvider('provideDecorateCases')
@@ -22,7 +20,7 @@ export default class BodyConverterDecoratorTest extends TestCase {
         const decorated = decorator.decorate(request);
 
         const body = decorated.body;
-        expect(isFunction(body) ? body() : body).to.be.equal(expected);
+        __self.assertEquals(expected, isFunction(body) ? body() : body);
     }
 
     * provideDecorateCases() {
@@ -58,7 +56,7 @@ export default class BodyConverterDecoratorTest extends TestCase {
         const decorated = decorator.decorate(request);
 
         const body = decorated.body;
-        expect(isFunction(body) ? body() : body).to.be.equal(expectedContent);
+        __self.assertEquals(expectedContent, isFunction(body) ? body() : body);
     }
 
     * provideContents() {

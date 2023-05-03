@@ -1,5 +1,3 @@
-import { expect } from 'chai';
-
 const Argument = Jymfony.Component.Testing.Argument.Argument;
 const Client = Solido.Atlante.Http.Client;
 const DecoratorInterface = Solido.Atlante.Requester.Decorator.DecoratorInterface;
@@ -38,12 +36,8 @@ export default class ClientTest extends TestCase {
         this._requester
             .request('GET', 'http://example.org/', { Accept: 'application/json' }, undefined)
             .shouldBeCalled()
-            .willReturn(response)
-        ;
-
-        expect(await this._client.request('GET', 'http://example.org/'))
-            .to.be.equal(response)
-        ;
+            .willReturn(response);
+        __self.assertSame(response, await this._client.request('GET', 'http://example.org/'));
     }
 
     async testShouldPassRequestToDecorators() {
@@ -62,11 +56,8 @@ export default class ClientTest extends TestCase {
         this._requester
             .request('GET', 'http://example.org/', { Accept: 'application/json' }, undefined)
             .shouldBeCalled()
-            .willReturn(response)
-        ;
+            .willReturn(response);
 
-        expect(await this._client.request('GET', '/'))
-            .to.be.equal(response)
-        ;
+        __self.assertSame(response, await this._client.request('GET', '/'));
     }
 }

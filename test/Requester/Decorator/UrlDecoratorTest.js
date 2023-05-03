@@ -1,6 +1,4 @@
-import { @dataProvider } from '@jymfony/decorators';
 import { createRequest } from '../../../lib/Requester/Request';
-import { expect } from 'chai';
 
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
 const UrlDecorator = Solido.Atlante.Requester.Decorator.UrlDecorator;
@@ -11,8 +9,8 @@ export default class UrlDecoratorTest extends TestCase {
         const request = createRequest('GET', 'http://localhost/foo');
         const decorated = decorator.decorate(request);
 
-        expect(decorated).to.be.deep.equal(request);
-        expect(decorated).to.be.not.equal(request);
+        __self.assertEquals(request, decorated);
+        __self.assertTrue(request !== decorated);
     }
 
     @dataProvider('provideDecorateCases')
@@ -20,7 +18,7 @@ export default class UrlDecoratorTest extends TestCase {
         const decorator = new UrlDecorator(baseUrl);
         const decorated = decorator.decorate(createRequest('GET', url));
 
-        expect(decorated.url).to.be.equal(expected);
+        __self.assertEquals(expected, decorated.url);
     }
 
     * provideDecorateCases() {

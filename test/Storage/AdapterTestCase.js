@@ -1,21 +1,13 @@
-import { expect } from 'chai';
-
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
 
 /**
  * @memberOf Solido.Atlante.Tests.Storage
  */
-export class AdapterTestCase extends TestCase {
-    __construct() {
-        super.__construct();
-
-        /**
-         * @type {Solido.Atlante.Storage.StorageInterface}
-         *
-         * @private
-         */
-        this._cache = undefined;
-    }
+export default class AdapterTestCase extends TestCase {
+    /**
+     * @type {Solido.Atlante.Storage.StorageInterface}
+     */
+    _cache;
 
     beforeEach() {
         this._cache = this._createCachePool();
@@ -37,48 +29,48 @@ export class AdapterTestCase extends TestCase {
         await this._cache.save(item);
 
         const fooItem = await this._cache.getItem('key');
-        expect(fooItem.isHit).to.be.true;
-        expect(fooItem.get()).to.be.equal('4711');
+        __self.assertTrue(fooItem.isHit);
+        __self.assertEquals('4711', fooItem.get());
 
         const barItem = await this._cache.getItem('key2');
-        expect(barItem.isHit).to.be.true;
-        expect(barItem.get()).to.be.equal('4712');
+        __self.assertTrue(barItem.isHit);
+        __self.assertEquals('4712', barItem.get());
 
         await this._cache.deleteItem('key');
-        expect((await this._cache.getItem('key')).isHit).to.be.false;
-        expect((await this._cache.getItem('key2')).isHit).to.be.true;
+        __self.assertFalse((await this._cache.getItem('key')).isHit);
+        __self.assertTrue((await this._cache.getItem('key2')).isHit);
 
         await this._cache.deleteItem('key2');
-        expect((await this._cache.getItem('key')).isHit).to.be.false;
-        expect((await this._cache.getItem('key2')).isHit).to.be.false;
+        __self.assertFalse((await this._cache.getItem('key')).isHit);
+        __self.assertFalse((await this._cache.getItem('key2')).isHit);
     }
 
     async testBasicUsageWithLongKeys() {
         const key = 'a'.repeat(300);
 
         let item = await this._cache.getItem(key);
-        expect(item.isHit).to.be.false;
-        expect(item.key).to.be.equal(key);
+        __self.assertFalse(item.isHit);
+        __self.assertEquals(key, item.key);
         item.set('value');
-        expect(await this._cache.save(item)).to.be.true;
+        __self.assertTrue(await this._cache.save(item));
 
         item = await this._cache.getItem(key);
-        expect(item.isHit).to.be.true;
-        expect(item.key).to.be.equal(key);
-        expect(item.get()).to.be.equal('value');
+        __self.assertTrue(item.isHit);
+        __self.assertEquals(key, item.key);
+        __self.assertEquals('value', item.get());
 
-        expect(await this._cache.deleteItem(key)).to.be.true;
+        __self.assertTrue(await this._cache.deleteItem(key));
 
         item = await this._cache.getItem(key);
-        expect(item.isHit).to.be.false;
+        __self.assertFalse(item.isHit);
     }
 
     async testItemModifiersReturnsSelf() {
         const item = await this._cache.getItem('key');
 
-        expect(item.set('4711')).to.be.equal(item);
-        expect(item.expiresAfter(2)).to.be.equal(item);
-        expect(item.expiresAt(new Date(new Date().valueOf() + 7200000))).to.be.equal(item);
+        __self.assertEquals(item, item.set('4711'));
+        __self.assertEquals(item, item.expiresAfter(2));
+        __self.assertEquals(item, item.expiresAt(new Date(new Date().valueOf() + 7200000)));
     }
 
     async testGetItem() {
@@ -87,13 +79,13 @@ export class AdapterTestCase extends TestCase {
         await this._cache.save(item);
 
         item = await this._cache.getItem('key');
-        expect(item.isHit).to.be.true;
-        expect(item.key).to.be.equal('key');
-        expect(item.get()).to.be.equal('value');
+        __self.assertTrue(item.isHit);
+        __self.assertEquals('key', item.key);
+        __self.assertEquals('value', item.get());
 
         item = await this._cache.getItem('key2');
-        expect(item.isHit).to.be.false;
-        expect(item.get()).to.be.undefined;
+        __self.assertFalse(item.isHit);
+        __self.assertUndefined(item.get());
     }
 
     async testHasItem() {
@@ -101,8 +93,8 @@ export class AdapterTestCase extends TestCase {
         item.set('value');
         await this._cache.save(item);
 
-        expect(await this._cache.hasItem('key')).to.be.true;
-        expect(await this._cache.hasItem('key2')).to.be.false;
+        __self.assertTrue(await this._cache.hasItem('key'));
+        __self.assertFalse(await this._cache.hasItem('key2'));
     }
 
     async testClear() {
@@ -110,9 +102,9 @@ export class AdapterTestCase extends TestCase {
         item.set('value');
         await this._cache.save(item);
 
-        expect(await this._cache.clear()).to.be.true;
-        expect((await this._cache.getItem('key')).isHit).to.be.false;
-        expect(await this._cache.hasItem('key2')).to.be.false;
+        __self.assertTrue(await this._cache.clear());
+        __self.assertFalse((await this._cache.getItem('key')).isHit);
+        __self.assertFalse(await this._cache.hasItem('key2'));
     }
 
     async testDeleteItem() {
@@ -120,31 +112,31 @@ export class AdapterTestCase extends TestCase {
         item.set('value');
         await this._cache.save(item);
 
-        expect(await this._cache.deleteItem('key')).to.be.true;
-        expect((await this._cache.getItem('key')).isHit).to.be.false;
-        expect(await this._cache.hasItem('key')).to.be.false;
+        __self.assertTrue(await this._cache.deleteItem('key'));
+        __self.assertFalse((await this._cache.getItem('key')).isHit);
+        __self.assertFalse(await this._cache.hasItem('key'));
 
         // Requesting deletion of non-existent key should return true
-        expect(await this._cache.deleteItem('key2')).to.be.true;
+        __self.assertTrue(await this._cache.deleteItem('key2'));
     }
 
     async testSave() {
         const item = await this._cache.getItem('key');
         item.set('value');
 
-        expect(await this._cache.save(item)).to.be.true;
-        expect((await this._cache.getItem('key')).get()).to.be.equal('value');
+        __self.assertTrue(await this._cache.save(item));
+        __self.assertEquals('value', (await this._cache.getItem('key')).get());
     }
 
     async testSaveExpired() {
         const item = await this._cache.getItem('key');
         item.set('value');
         item.expiresAt(new Date(new Date().valueOf() + 10000));
-        expect(await this._cache.save(item)).to.be.true;
+        __self.assertTrue(await this._cache.save(item));
         item.expiresAt(new Date(new Date().valueOf() - 1000));
         await this._cache.save(item);
 
-        expect(await this._cache.hasItem('key')).to.be.false;
+        __self.assertFalse(await this._cache.hasItem('key'));
     };
 
     async testDefaultLifetime() {
@@ -157,11 +149,11 @@ export class AdapterTestCase extends TestCase {
 
         await __jymfony.sleep(1000);
         item = await cache.getItem('key.dlt');
-        expect(item.isHit).to.be.true;
+        __self.assertTrue(item.isHit);
 
         await __jymfony.sleep(2000);
         item = await cache.getItem('key.dlt');
-        expect(item.isHit).to.be.false;
+        __self.assertFalse(item.isHit);
     }
 
     async testExpiration() {
@@ -171,12 +163,12 @@ export class AdapterTestCase extends TestCase {
 
         await __jymfony.sleep(3000);
         let item = await this._cache.getItem('k1');
-        expect(item.isHit).to.be.false;
-        expect(item.get()).to.be.undefined;
+        __self.assertFalse(item.isHit);
+        __self.assertUndefined(item.get());
 
         item = await this._cache.getItem('k2');
-        expect(item.isHit).to.be.true;
-        expect(item.get()).to.be.equal('v2');
+        __self.assertTrue(item.isHit);
+        __self.assertEquals('v2', item.get());
     };
 
     /**

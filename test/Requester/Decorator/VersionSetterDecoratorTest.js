@@ -1,6 +1,4 @@
-import { @dataProvider } from '@jymfony/decorators';
 import { createRequest } from '../../../lib/Requester/Request';
-import { expect } from 'chai';
 
 const TestCase = Jymfony.Component.Testing.Framework.TestCase;
 const VersionSetterDecorator = Solido.Atlante.Requester.Decorator.VersionSetterDecorator;
@@ -12,7 +10,7 @@ export default class VersionSetterDecoratorTest extends TestCase
         const request = createRequest('GET', '/foo', null, 'foo');
         const decorated = decorator.decorate(request);
 
-        expect(decorated).to.be.not.equal(request);
+        __self.assertNotEquals(request, decorated);
     }
 
     @dataProvider('provideDecorateCases')
@@ -20,7 +18,7 @@ export default class VersionSetterDecoratorTest extends TestCase
         const decorator = new VersionSetterDecorator(version);
         const decorated = decorator.decorate(createRequest('GET', '/example.com', givenHeaders));
 
-        expect(decorated.headers.all).to.be.deep.equal(expectedHeaders);
+        __self.assertEquals(expectedHeaders, decorated.headers.all);
     }
 
     * provideDecorateCases() {

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { createRequest } from '../../lib/Requester/Request';
-import { expect } from 'chai';
 
 const Argument = Jymfony.Component.Testing.Argument.Argument;
 const AxiosRequester = Solido.Atlante.Requester.AxiosRequester;
@@ -16,23 +15,15 @@ const genericResponse = async (headers = {'Content-Type': 'application/json'}, s
 };
 
 export default class AxiosRequesterTest extends TestCase {
-    __construct() {
-        super.__construct();
+    /**
+     * @type {Jymfony.Component.Testing.Prophecy.ObjectProphecy}
+     */
+    _axios;
 
-        /**
-         * @type {Jymfony.Component.Testing.Prophecy.ObjectProphecy}
-         *
-         * @private
-         */
-        this._axios = undefined;
-
-        /**
-         * @type {Solido.Atlante.Requester.AxiosRequester}
-         *
-         * @private
-         */
-        this._requester = undefined;
-    }
+    /**
+     * @type {Solido.Atlante.Requester.AxiosRequester}
+     */
+    _requester;
 
     beforeEach() {
         this._axios = this.prophesize(axios.Axios);
@@ -85,8 +76,8 @@ export default class AxiosRequesterTest extends TestCase {
             }));
 
         const response = await this._requester.request('GET', 'resource/subresource');
-        expect(response.getHeaders().get('Content-Type')).to.be.eq('application/octet-stream');
-        expect(response.getHeaders().get('Date')).to.be.eq('12 Jan 2019 02:00:00 GMT');
+        __self.assertEquals('application/octet-stream', response.getHeaders().get('Content-Type'));
+        __self.assertEquals('12 Jan 2019 02:00:00 GMT', response.getHeaders().get('Date'));
     }
 
     async testShouldReportStatusCodeCorrectly() {
@@ -96,7 +87,7 @@ export default class AxiosRequesterTest extends TestCase {
             .willReturn(genericResponse(undefined, 418, 'I\'m a teapot'));
 
         const response = await this._requester.request('GET', 'resource/subresource');
-        expect(response.getStatusCode()).to.be.eq(418);
+        __self.assertEquals(418, response.getStatusCode());
     }
 
     async testShouldWorkWithBodyConverterDecorator() {
