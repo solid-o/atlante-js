@@ -10,7 +10,7 @@ export default class VersionSetterDecoratorTest extends TestCase
         const request = createRequest('GET', '/foo', null, 'foo');
         const decorated = decorator.decorate(request);
 
-        __self.assertNotEquals(request, decorated);
+        __self.assertFalse(request === decorated);
     }
 
     @dataProvider('provideDecorateCases')
