@@ -93,7 +93,7 @@ class Client extends implementationOf(Interface) implements ClientInterface {
         }
 
         const response = await this._requester.request(request.method, request.url, request.headers.all, request.body);
-        this._filterResponse(response);
+        this._filterResponse(response, request);
 
         return response;
     }
@@ -101,19 +101,19 @@ class Client extends implementationOf(Interface) implements ClientInterface {
     /**
      * Filters a response, eventually throwing an error in case response status is not successful.
      */
-    protected _filterResponse(response: ResponseInterface): void {
+    protected _filterResponse(response: ResponseInterface, request: Request): void {
         switch (true) {
             case response instanceof BadResponse:
-                throw new BadRequestException(response as BadResponse);
+                throw new BadRequestException(response as BadResponse, request);
 
             case response instanceof AccessDeniedResponse:
-                throw new AccessDeniedException(response as AccessDeniedResponse);
+                throw new AccessDeniedException(response as AccessDeniedResponse, request);
 
             case response instanceof NotFoundResponse:
-                throw new NotFoundException(response as NotFoundResponse);
+                throw new NotFoundException(response as NotFoundResponse, request);
 
             case response instanceof InvalidResponse:
-                throw new InvalidRequestException(response as InvalidResponse);
+                throw new InvalidRequestException(response as InvalidResponse, request);
         }
     }
 }
