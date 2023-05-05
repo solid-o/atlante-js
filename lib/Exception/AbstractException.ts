@@ -1,15 +1,21 @@
+import Request from '../Requester/Request';
 import { ResponseInterface } from '../Requester/Response/ResponseInterface';
 
 export default
 class AbstractException extends Error {
     private readonly _response: ResponseInterface;
+    private readonly _request: Request;
 
     /**
      * Constructor.
      */
-    constructor(response: ResponseInterface | undefined, message?: string) {
+    constructor(response: ResponseInterface, message?: string);
+    constructor(response: ResponseInterface, request: Request | undefined, message?: string);
+    constructor(response: ResponseInterface, requestOrMessage: Request | string | undefined, message?: string) {
+        message = isString(requestOrMessage) ? requestOrMessage : message;
         super(message ?? ('Unsuccessful response received. Status code = ' + response.getStatusCode()));
         this._response = response;
+        this._request = isObject(requestOrMessage) ? requestOrMessage : undefined;
     }
 
     /**
@@ -17,5 +23,12 @@ class AbstractException extends Error {
      */
     get response(): ResponseInterface {
         return this._response;
+    }
+
+    /**
+     * Gets the request, if set.
+     */
+    get request(): Request | undefined {
+        return this._request;
     }
 }
