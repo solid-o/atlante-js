@@ -11,8 +11,4 @@ class NotFoundException extends AbstractException {
     get response(): NotFoundResponse {
         return super.response as NotFoundResponse;
     }
-
-    get request(): Request {
-        return super.request;
-    }
 }

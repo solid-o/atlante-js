@@ -9,10 +9,13 @@ class AbstractException extends Error {
     /**
      * Constructor.
      */
-    constructor(response: ResponseInterface | undefined, request: Request | undefined, message?: string) {
+    constructor(response: ResponseInterface, message?: string);
+    constructor(response: ResponseInterface, request: Request | undefined, message?: string);
+    constructor(response: ResponseInterface, requestOrMessage: Request | string | undefined, message?: string) {
+        message = isString(requestOrMessage) ? requestOrMessage : message;
         super(message ?? ('Unsuccessful response received. Status code = ' + response.getStatusCode()));
         this._response = response;
-        this._request = request;
+        this._request = isObject(requestOrMessage) ? requestOrMessage : undefined;
     }
 
     /**
@@ -25,7 +28,7 @@ class AbstractException extends Error {
     /**
      * Gets the request, if set.
      */
-    get request(): Request {
+    get request(): Request | undefined {
         return this._request;
     }
 }

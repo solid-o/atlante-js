@@ -13,10 +13,6 @@ class BadRequestException extends AbstractException {
         return super.response as BadResponse;
     }
 
-    get request(): Request {
-        return super.request;
-    }
-
     get errors(): BadResponsePropertyTree {
         return this.response.getErrors();
     }

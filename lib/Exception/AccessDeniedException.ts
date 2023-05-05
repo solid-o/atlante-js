@@ -11,8 +11,4 @@ class AccessDeniedException extends AbstractException {
     get response(): AccessDeniedResponse {
         return super.response as AccessDeniedResponse;
     }
-
-    get request(): Request {
-        return super.request;
-    }
 }

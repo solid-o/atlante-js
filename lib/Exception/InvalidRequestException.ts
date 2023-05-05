@@ -11,8 +11,4 @@ class InvalidRequestException extends AbstractException {
     get response(): InvalidResponse {
         return super.response as InvalidResponse;
     }
-
-    get request(): Request {
-        return super.request;
-    }
 }
