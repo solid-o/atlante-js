@@ -17,7 +17,6 @@ jobs:
       with:
         node-version: '18.x'
     - run: npm install
-    - run: touch node_modules/@jymfony/decorators/index.d.ts # Bug: "error TS2688: Cannot find type definition file for 'decorators'."
     - run: npm test
       env:
         CI: true
