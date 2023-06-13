@@ -26,6 +26,7 @@ jobs:
             - run: npm install
             - run: npm install @jymfony/compiler
               if: ${{ matrix.node_version < 16 }}
+            - run: npm run build
             - run: npm test
               if: matrix.node_version != '18'
             - run: npm run-script coverage

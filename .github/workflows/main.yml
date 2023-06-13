@@ -16,7 +16,7 @@ jobs:
       with:
         node-version: '18.x'
     - run: npm install
+    - run: npm run build
     - run: npm test
       env:
         CI: true
-    - run: npm run build
