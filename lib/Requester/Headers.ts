@@ -1,5 +1,5 @@
-import Accept from './Header/Accept';
-import BaseAccept from './Header/BaseAccept';
+import Accept from './Header/Accept.js';
+import BaseAccept from './Header/BaseAccept.js';
 
 export default
 class Headers {

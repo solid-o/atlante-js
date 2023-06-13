@@ -1,4 +1,4 @@
-import Headers from './Headers';
+import Headers from './Headers.js';
 
 export default
 interface HttpMessage {

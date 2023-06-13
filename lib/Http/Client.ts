@@ -7,20 +7,20 @@ import '@jymfony/util/lib/mixins.js';
 import '@jymfony/util/lib/Platform.js';
 import '@jymfony/util/lib/is.js';
 
-import Interface, { ClientInterface } from './ClientInterface';
-import AccessDeniedException from '../Exception/AccessDeniedException';
-import AccessDeniedResponse from '../Requester/Response/AccessDeniedResponse';
-import BadRequestException from '../Exception/BadRequestException';
-import BadResponse from '../Requester/Response/BadResponse';
-import { DecoratorInterface } from '../Requester/Decorator/DecoratorInterface';
-import Headers from '../Requester/Headers';
-import InvalidRequestException from '../Exception/InvalidRequestException';
-import InvalidResponse from '../Requester/Response/InvalidResponse';
-import NotFoundException from '../Exception/NotFoundException';
-import NotFoundResponse from '../Requester/Response/NotFoundResponse';
-import Request from '../Requester/Request';
-import { RequesterInterface } from '../Requester/RequesterInterface';
-import { ResponseInterface } from '../Requester/Response/ResponseInterface';
+import Interface, { ClientInterface } from './ClientInterface.js';
+import AccessDeniedException from '../Exception/AccessDeniedException.js';
+import AccessDeniedResponse from '../Requester/Response/AccessDeniedResponse.js';
+import BadRequestException from '../Exception/BadRequestException.js';
+import BadResponse from '../Requester/Response/BadResponse.js';
+import { DecoratorInterface } from '../Requester/Decorator/DecoratorInterface.js';
+import Headers from '../Requester/Headers.js';
+import InvalidRequestException from '../Exception/InvalidRequestException.js';
+import InvalidResponse from '../Requester/Response/InvalidResponse.js';
+import NotFoundException from '../Exception/NotFoundException.js';
+import NotFoundResponse from '../Requester/Response/NotFoundResponse.js';
+import Request from '../Requester/Request.js';
+import { RequesterInterface } from '../Requester/RequesterInterface.js';
+import { ResponseInterface } from '../Requester/Response/ResponseInterface.js';
 
 export default
 class Client extends implementationOf(Interface) implements ClientInterface {

@@ -1,6 +1,6 @@
-import AbstractException from './AbstractException';
-import AccessDeniedResponse from '../Requester/Response/AccessDeniedResponse';
-import Request from '../Requester/Request';
+import AbstractException from './AbstractException.js';
+import AccessDeniedResponse from '../Requester/Response/AccessDeniedResponse.js';
+import Request from '../Requester/Request.js';
 
 export default
 class AccessDeniedException extends AbstractException {

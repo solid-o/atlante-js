@@ -1,4 +1,4 @@
-import BaseAccept from './BaseAccept';
+import BaseAccept from './BaseAccept.js';
 
 export default
 class Accept extends BaseAccept {

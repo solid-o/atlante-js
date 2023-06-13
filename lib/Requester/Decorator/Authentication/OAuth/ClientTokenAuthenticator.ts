@@ -1,12 +1,12 @@
-import Decorator, { DecoratorInterface } from '../../DecoratorInterface';
-import Headers from '../../../Headers';
-import InvalidResponse from '../../../Response/InvalidResponse';
-import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
-import Request from '../../../Request';
-import { RequesterInterface } from '../../../RequesterInterface';
-import { ResponseInterface } from '../../../Response/ResponseInterface';
-import { StorageInterface } from '../../../../Storage/StorageInterface';
-import { TokenResponseDataInterface } from './TokenResponseDataInterface';
+import Decorator, { DecoratorInterface } from '../../DecoratorInterface.js';
+import Headers from '../../../Headers.js';
+import InvalidResponse from '../../../Response/InvalidResponse.js';
+import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException.js';
+import Request from '../../../Request.js';
+import { RequesterInterface } from '../../../RequesterInterface.js';
+import { ResponseInterface } from '../../../Response/ResponseInterface.js';
+import { StorageInterface } from '../../../../Storage/StorageInterface.js';
+import { TokenResponseDataInterface } from './TokenResponseDataInterface.js';
 
 export interface ClientTokenAuthenticatorConfiguration {
     token_endpoint: string;

@@ -1,11 +1,11 @@
-import IResponseFactory, { ResponseFactoryInterface } from './ResponseFactoryInterface';
-import AccessDeniedResponse from './AccessDeniedResponse';
-import BadResponse from './BadResponse';
-import Headers from '../Headers';
-import InvalidResponse from './InvalidResponse';
-import NotFoundResponse from './NotFoundResponse';
-import Response from './Response';
-import { ResponseInterface } from './ResponseInterface';
+import IResponseFactory, { ResponseFactoryInterface } from './ResponseFactoryInterface.js';
+import AccessDeniedResponse from './AccessDeniedResponse.js';
+import BadResponse from './BadResponse.js';
+import Headers from '../Headers.js';
+import InvalidResponse from './InvalidResponse.js';
+import NotFoundResponse from './NotFoundResponse.js';
+import Response from './Response.js';
+import { ResponseInterface } from './ResponseInterface.js';
 
 export default
 abstract class AbstractResponseFactory extends implementationOf(IResponseFactory) implements ResponseFactoryInterface {

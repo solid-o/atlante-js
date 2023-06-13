@@ -1,6 +1,6 @@
-import BadResponsePropertyTree from './BadResponsePropertyTree';
-import Headers from '../Headers';
-import InvalidResponse from './InvalidResponse';
+import BadResponsePropertyTree from './BadResponsePropertyTree.js';
+import Headers from '../Headers.js';
+import InvalidResponse from './InvalidResponse.js';
 
 export default class BadResponse extends InvalidResponse {
     public static readonly HTTP_STATUS = 400;

@@ -1,6 +1,6 @@
-import AbstractResponseFactory from './AbstractResponseFactory';
-import Headers from '../Headers';
-import { ResponseInterface } from './ResponseInterface';
+import AbstractResponseFactory from './AbstractResponseFactory.js';
+import Headers from '../Headers.js';
+import { ResponseInterface } from './ResponseInterface.js';
 
 export default
 class XhrResponseFactory extends AbstractResponseFactory {

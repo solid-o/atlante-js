@@ -1,5 +1,5 @@
-import AbstractStorage from './AbstractStorage';
-import NullMarshaller from './Marshaller/NullMarshaller';
+import AbstractStorage from './AbstractStorage.js';
+import NullMarshaller from './Marshaller/NullMarshaller.js';
 
 export default
 class ProvidedTokenStorage extends AbstractStorage {

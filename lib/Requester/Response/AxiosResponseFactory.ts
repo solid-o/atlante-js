@@ -1,7 +1,7 @@
-import AbstractResponseFactory from './AbstractResponseFactory';
+import AbstractResponseFactory from './AbstractResponseFactory.js';
 import { AxiosResponse } from 'axios';
-import Headers from '../Headers';
-import { ResponseInterface } from './ResponseInterface';
+import Headers from '../Headers.js';
+import { ResponseInterface } from './ResponseInterface.js';
 
 export default
 class AxiosResponseFactory extends AbstractResponseFactory {

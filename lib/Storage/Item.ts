@@ -1,4 +1,4 @@
-import Interface, { ItemInterface } from './ItemInterface';
+import Interface, { ItemInterface } from './ItemInterface.js';
 
 export default
 class Item extends implementationOf(Interface) implements ItemInterface {

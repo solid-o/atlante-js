@@ -1,5 +1,5 @@
-import Decorator, { DecoratorInterface } from './DecoratorInterface';
-import Request from '../Request';
+import Decorator, { DecoratorInterface } from './DecoratorInterface.js';
+import Request from '../Request.js';
 
 const isBlob = 'undefined' !== typeof Blob ? v => v instanceof Blob : () => false;
 

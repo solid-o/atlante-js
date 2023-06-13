@@ -1,6 +1,6 @@
-import AbstractException from './AbstractException';
-import NotFoundResponse from '../Requester/Response/NotFoundResponse';
-import Request from '../Requester/Request';
+import AbstractException from './AbstractException.js';
+import NotFoundResponse from '../Requester/Response/NotFoundResponse.js';
+import Request from '../Requester/Request.js';
 
 export default
 class NotFoundException extends AbstractException {

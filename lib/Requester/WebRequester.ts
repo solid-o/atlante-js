@@ -1,7 +1,7 @@
-import Requester, { RequesterInterface } from './RequesterInterface';
-import { ResponseFactoryInterface } from './Response/ResponseFactoryInterface';
-import { ResponseInterface } from './Response/ResponseInterface';
-import XhrResponseFactory from './Response/XhrResponseFactory';
+import Requester, { RequesterInterface } from './RequesterInterface.js';
+import { ResponseFactoryInterface } from './Response/ResponseFactoryInterface.js';
+import { ResponseInterface } from './Response/ResponseInterface.js';
+import XhrResponseFactory from './Response/XhrResponseFactory.js';
 
 export default
 class WebRequester extends implementationOf(Requester) implements RequesterInterface {

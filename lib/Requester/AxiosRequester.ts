@@ -1,8 +1,8 @@
-import Requester, { RequesterInterface } from './RequesterInterface';
+import Requester, { RequesterInterface } from './RequesterInterface.js';
 import axios, { AxiosInstance, AxiosStatic, Method } from 'axios';
-import AxiosResponseFactory from './Response/AxiosResponseFactory';
-import { ResponseFactoryInterface } from './Response/ResponseFactoryInterface';
-import { ResponseInterface } from './Response/ResponseInterface';
+import AxiosResponseFactory from './Response/AxiosResponseFactory.js';
+import { ResponseFactoryInterface } from './Response/ResponseFactoryInterface.js';
+import { ResponseInterface } from './Response/ResponseInterface.js';
 
 export default
 class AxiosRequester extends implementationOf(Requester) implements RequesterInterface {

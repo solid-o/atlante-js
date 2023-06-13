@@ -1,9 +1,9 @@
-import BaseAuthenticator, { AuthFlowDisplay, AuthorizationOptions } from './BaseAuthenticator';
-import { generateRandomString, sha256 } from '../../../../Utils/Crypto';
-import InvalidResponse from '../../../Response/InvalidResponse';
-import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
-import { ResponseInterface } from '../../../Response/ResponseInterface';
-import { TokenResponseDataInterface } from '../OAuth/TokenResponseDataInterface';
+import BaseAuthenticator, { AuthFlowDisplay, AuthorizationOptions } from './BaseAuthenticator.js';
+import { generateRandomString, sha256 } from '../../../../Utils/Crypto.js';
+import InvalidResponse from '../../../Response/InvalidResponse.js';
+import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException.js';
+import { ResponseInterface } from '../../../Response/ResponseInterface.js';
+import { TokenResponseDataInterface } from '../OAuth/TokenResponseDataInterface.js';
 
 export default
 class PkceCodeFlowAuthenticator extends BaseAuthenticator {

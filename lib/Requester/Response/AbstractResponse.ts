@@ -1,5 +1,5 @@
-import IResponse, { ResponseInterface } from './ResponseInterface';
-import Headers from '../Headers';
+import IResponse, { ResponseInterface } from './ResponseInterface.js';
+import Headers from '../Headers.js';
 
 export default
 abstract class AbstractResponse extends implementationOf(IResponse) implements ResponseInterface {

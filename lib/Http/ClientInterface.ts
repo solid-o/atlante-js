@@ -1,5 +1,5 @@
-import Headers from '../Requester/Headers';
-import { ResponseInterface } from '../Requester/Response/ResponseInterface';
+import Headers from '../Requester/Headers.js';
+import { ResponseInterface } from '../Requester/Response/ResponseInterface.js';
 
 export interface ClientInterface {}
 export class ClientInterface {

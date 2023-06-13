@@ -1,4 +1,4 @@
-import Marshaller, { MarshallerInterface } from './MarshallerInterface';
+import Marshaller, { MarshallerInterface } from './MarshallerInterface.js';
 
 export default
 class NullMarshaller extends implementationOf(Marshaller) implements MarshallerInterface {

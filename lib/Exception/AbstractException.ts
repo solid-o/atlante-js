@@ -1,5 +1,5 @@
-import Request from '../Requester/Request';
-import { ResponseInterface } from '../Requester/Response/ResponseInterface';
+import Request from '../Requester/Request.js';
+import { ResponseInterface } from '../Requester/Response/ResponseInterface.js';
 
 export default
 class AbstractException extends Error {

@@ -1,5 +1,5 @@
-import '@jymfony/util/lib/String/trim';
-import ArrayUtils from '../../Utils/ArrayUtils';
+import '@jymfony/util/lib/String/trim.js';
+import ArrayUtils from '../../Utils/ArrayUtils.js';
 
 export default
 class BaseAccept {

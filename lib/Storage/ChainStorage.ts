@@ -1,5 +1,5 @@
-import Storage, { StorageInterface } from './StorageInterface';
-import { ItemInterface } from './ItemInterface';
+import Storage, { StorageInterface } from './StorageInterface.js';
+import { ItemInterface } from './ItemInterface.js';
 
 export default
 class ChainStorage extends implementationOf(Storage) implements StorageInterface {

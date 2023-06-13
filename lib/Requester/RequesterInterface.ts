@@ -1,4 +1,4 @@
-import { ResponseInterface } from './Response/ResponseInterface';
+import { ResponseInterface } from './Response/ResponseInterface.js';
 
 export interface RequesterInterface { }
 export class RequesterInterface {

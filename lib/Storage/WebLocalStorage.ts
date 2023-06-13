@@ -1,4 +1,4 @@
-import AbstractStorage from './AbstractStorage';
+import AbstractStorage from './AbstractStorage.js';
 
 export default
 class WebLocalStorage extends AbstractStorage {

@@ -1,7 +1,7 @@
-import BaseAuthenticator, { AuthorizationOptions, OpenidAuthenticatorConfiguration } from './BaseAuthenticator';
-import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
-import { RequesterInterface } from '../../../RequesterInterface';
-import { StorageInterface } from '../../../../Storage/StorageInterface';
+import BaseAuthenticator, { AuthorizationOptions, OpenidAuthenticatorConfiguration } from './BaseAuthenticator.js';
+import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException.js';
+import { RequesterInterface } from '../../../RequesterInterface.js';
+import { StorageInterface } from '../../../../Storage/StorageInterface.js';
 
 interface ImplicitFlowAuthenticatorConfiguration extends OpenidAuthenticatorConfiguration {
     refresh_redirect_uri: string;

@@ -1,4 +1,4 @@
-import Request from '../../Request';
+import Request from '../../Request.js';
 
 const encode = (() => {
     if ('undefined' !== typeof Buffer) {

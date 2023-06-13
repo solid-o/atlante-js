@@ -1,7 +1,7 @@
-import BaseAuthenticator, { AuthorizationOptions } from './BaseAuthenticator';
-import InvalidResponse from '../../../Response/InvalidResponse';
-import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
-import { TokenResponseDataInterface } from '../OAuth/TokenResponseDataInterface';
+import BaseAuthenticator, { AuthorizationOptions } from './BaseAuthenticator.js';
+import InvalidResponse from '../../../Response/InvalidResponse.js';
+import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException.js';
+import { TokenResponseDataInterface } from '../OAuth/TokenResponseDataInterface.js';
 
 export default
 class CodeFlowAuthenticator extends BaseAuthenticator {

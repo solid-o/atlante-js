@@ -1,12 +1,12 @@
-import ServerConfiguration, { ServerConfigurationProps } from './ServerConfiguration';
-import Headers from '../../../Headers';
-import HttpBasicAuthenticator from '../HttpBasicAuthenticator';
-import InvalidRequestException from '../../../../Exception/InvalidRequestException';
-import InvalidResponse from '../../../Response/InvalidResponse';
-import { RequesterInterface } from '../../../RequesterInterface';
-import { StorageInterface } from '../../../../Storage/StorageInterface';
-import TokenPasswordAuthenticator from '../OAuth/TokenPasswordAuthenticator';
-import { TokenRequestParams } from '../OAuth/ClientTokenAuthenticator';
+import ServerConfiguration, { ServerConfigurationProps } from './ServerConfiguration.js';
+import Headers from '../../../Headers.js';
+import HttpBasicAuthenticator from '../HttpBasicAuthenticator.js';
+import InvalidRequestException from '../../../../Exception/InvalidRequestException.js';
+import InvalidResponse from '../../../Response/InvalidResponse.js';
+import { RequesterInterface } from '../../../RequesterInterface.js';
+import { StorageInterface } from '../../../../Storage/StorageInterface.js';
+import TokenPasswordAuthenticator from '../OAuth/TokenPasswordAuthenticator.js';
+import { TokenRequestParams } from '../OAuth/ClientTokenAuthenticator.js';
 
 export interface OpenidAuthenticatorConfiguration {
     server_url: string;

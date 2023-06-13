@@ -1,6 +1,6 @@
-import AbstractException from './AbstractException';
-import InvalidResponse from '../Requester/Response/InvalidResponse';
-import Request from '../Requester/Request';
+import AbstractException from './AbstractException.js';
+import InvalidResponse from '../Requester/Response/InvalidResponse.js';
+import Request from '../Requester/Request.js';
 
 export default
 class InvalidRequestException extends AbstractException {

@@ -1,7 +1,7 @@
-import Decorator, { DecoratorInterface } from './DecoratorInterface';
-import Accept from '../Header/Accept';
-import Headers from '../Headers';
-import Request from '../Request';
+import Decorator, { DecoratorInterface } from './DecoratorInterface.js';
+import Accept from '../Header/Accept.js';
+import Headers from '../Headers.js';
+import Request from '../Request.js';
 
 export default
 class VersionSetterDecorator extends implementationOf(Decorator) implements DecoratorInterface {

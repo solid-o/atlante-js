@@ -1,4 +1,4 @@
-import AbstractStorage from './AbstractStorage';
+import AbstractStorage from './AbstractStorage.js';
 
 const getCookie = (key: string) => {
     const name = key + '=';

@@ -1,10 +1,10 @@
-import ClientTokenAuthenticator, { ClientTokenAuthenticatorConfiguration } from './ClientTokenAuthenticator';
-import InvalidResponse from '../../../Response/InvalidResponse';
-import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException';
-import { RequesterInterface } from '../../../RequesterInterface';
-import { ResponseInterface } from '../../../Response/ResponseInterface';
-import { StorageInterface } from '../../../../Storage/StorageInterface';
-import { TokenResponseDataInterface } from './TokenResponseDataInterface';
+import ClientTokenAuthenticator, { ClientTokenAuthenticatorConfiguration } from './ClientTokenAuthenticator.js';
+import InvalidResponse from '../../../Response/InvalidResponse.js';
+import NoTokenAvailableException from '../../../../Exception/NoTokenAvailableException.js';
+import { RequesterInterface } from '../../../RequesterInterface.js';
+import { ResponseInterface } from '../../../Response/ResponseInterface.js';
+import { StorageInterface } from '../../../../Storage/StorageInterface.js';
+import { TokenResponseDataInterface } from './TokenResponseDataInterface.js';
 
 interface TokenPasswordAuthenticatorConfiguration extends ClientTokenAuthenticatorConfiguration {
     access_token_key?: string;

@@ -1,5 +1,5 @@
-import Headers from './Headers';
-import HttpMessage from './HttpMessage';
+import Headers from './Headers.js';
+import HttpMessage from './HttpMessage.js';
 
 export default interface Request<T = any> extends HttpMessage {
     readonly method: string;
