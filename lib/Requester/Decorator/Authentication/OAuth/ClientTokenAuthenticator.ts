@@ -26,7 +26,7 @@ class ClientTokenAuthenticator extends implementationOf(Decorator) implements De
     protected _tokenEndpoint: string;
     protected _tokenStorage: StorageInterface;
     protected _clientId: string;
-    protected _clientSecret: string;
+    protected _clientSecret: undefined | null | string;
     protected _tokenPromise: null | Promise<string>;
     private readonly _clientTokenKey: string;
     private readonly _encoding: 'json' | 'form';
@@ -97,13 +97,18 @@ class ClientTokenAuthenticator extends implementationOf(Decorator) implements De
      * Builds token request body and headers.
      */
     protected _buildTokenRequest({ grant_type, ...extra }: TokenRequestParams): { body: any, headers: Headers } {
+        const body: any = {
+            grant_type,
+            client_id: this._clientId,
+            ...extra,
+        };
+
+        if (this._clientSecret) {
+            body.client_secret = this._clientSecret;
+        }
+
         return {
-            body: {
-                grant_type,
-                client_id: this._clientId,
-                client_secret: this._clientSecret,
-                ...extra,
-            },
+            body,
             headers: new Headers(),
         };
     }

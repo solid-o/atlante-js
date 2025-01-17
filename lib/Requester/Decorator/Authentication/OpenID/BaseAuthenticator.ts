@@ -151,7 +151,7 @@ export default abstract class BaseAuthenticator extends TokenPasswordAuthenticat
     }
 
     private async _getConfiguration(): Promise<ServerConfiguration> {
-        const configurationUrl = new URL('/.well-known/openid-configuration', this._serverUrl).toString();
+        const configurationUrl = new URL('.well-known/openid-configuration', this._serverUrl).toString();
         const response = await this._requester.request('GET', configurationUrl);
         if (response instanceof InvalidResponse) {
             throw new Error('Server misconfiguration or server does not support OpenID Connect');

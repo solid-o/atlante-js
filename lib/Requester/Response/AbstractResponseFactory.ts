@@ -49,4 +49,6 @@ abstract class AbstractResponseFactory extends implementationOf(IResponseFactory
 
         return data;
     }
+
+    abstract fromResponse(response: any): ResponseInterface;
 }

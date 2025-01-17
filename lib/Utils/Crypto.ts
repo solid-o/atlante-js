@@ -72,13 +72,11 @@ export const sha256 = async (message: string, encoding: 'hex' | 'base64' | 'url-
     if ('undefined' !== typeof window && 'undefined' !== typeof window.crypto) {
         const msgUint8 = new TextEncoder().encode(message);
         const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgUint8);
-        const arrayBuffer = new Uint8Array(hashBuffer);
-
         if ('hex' === encoding) {
-            return buf2hex(arrayBuffer);
+            return buf2hex(hashBuffer);
         }
 
-        return base64Encode(arrayBuffer, 'url-safe-base64' === encoding ? urlSafeBase64Alphabet : base64Alphabet);
+        return base64Encode(new Uint8Array(hashBuffer), 'url-safe-base64' === encoding ? urlSafeBase64Alphabet : base64Alphabet);
     }
 
     if (undefined === crypto) {

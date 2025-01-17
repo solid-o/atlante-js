@@ -30,7 +30,9 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
         authorizationUrl.searchParams.append('prompt', prompt ? prompt : 'login consent');
         authorizationUrl.searchParams.append('scope', this._scopes);
         authorizationUrl.searchParams.append('client_id', this._clientId);
-        authorizationUrl.searchParams.append('client_secret', this._clientSecret);
+        if (this._clientSecret) {
+            authorizationUrl.searchParams.append('client_secret', this._clientSecret);
+        }
         authorizationUrl.searchParams.append('redirect_uri', callbackUri);
         authorizationUrl.searchParams.append('display', display);
         authorizationUrl.searchParams.append('state', state);
@@ -116,7 +118,9 @@ export default class ImplicitFlowAuthenticator extends BaseAuthenticator {
         authorizationUrl.searchParams.append('prompt', 'none');
         authorizationUrl.searchParams.append('scope', this._scopes);
         authorizationUrl.searchParams.append('client_id', this._clientId);
-        authorizationUrl.searchParams.append('client_secret', this._clientSecret);
+        if (this._clientSecret) {
+            authorizationUrl.searchParams.append('client_secret', this._clientSecret);
+        }
         authorizationUrl.searchParams.append('redirect_uri', this._refreshRedirectUri);
         authorizationUrl.searchParams.append('id_token_hint', item.get());
         authorizationUrl.searchParams.append('state', state);
